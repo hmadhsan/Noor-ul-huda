@@ -1,0 +1,76 @@
+name: Feature branch build
+on:
+  push:
+    branches:
+      - 'feature/*'
+env:
+  NODE_VERSION: '14.x'
+  DEPLOYMENT_SCRIPT_FOLDER: '/tmp/admin-application'
+  DEPLOYMENT_SCRIPT: 'deployment.sh'
+  APPLICATION_NAME: 'admin-application'
+jobs:
+  build_deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Checkout Admin Application
+        uses: actions/checkout@v2
+      - name: Build
+        run: |
+          npm install
+          npm run coverage
+          npm run build
+      - name: Create Image Tag
+        id: tag
+        run: |
+          echo "::set-output name=TAG::${{ env.APPLICATION_NAME }}-$(git rev-parse --short HEAD)"
+      - name: DockerHub Login
+        uses: docker/login-action@v1.9.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          logout: true
+      - name: Build & Push Docker Image
+        env:
+          IMAGE_TAG: ${{ secrets.DOCKER_HUB_REPOSITORY }}:${{ steps.tag.outputs.TAG }}
+        run: |
+          echo "Docker image tag ${{ steps.tag.outputs.TAG }}"
+          docker build . --file Dockerfile --tag $IMAGE_TAG
+          docker push $IMAGE_TAG
+      - name: Copy Deployment Script
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.SERVICE_HOSTS }}
+          USERNAME: ${{ secrets.SERVICES_HOST_DEPLOYMENT_USERNAME }}
+          KEY: ${{ secrets.SERVICES_HOST_PRIVATE_KEY }}
+        with:
+          source: ${{ env.DEPLOYMENT_SCRIPT }}
+          target: ${{ env.DEPLOYMENT_SCRIPT_FOLDER }}
+      - name: Execute Deployment Script
+        uses: appleboy/ssh-action@master
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          DOCKER_HUB_REPOSITORY: ${{ secrets.DOCKER_HUB_REPOSITORY }}
+          TAG: ${{ steps.tag.outputs.TAG }}
+          APP_DEPLOYMENT_SCRIPT: ${{ env.DEPLOYMENT_SCRIPT_FOLDER }}/${{ env.DEPLOYMENT_SCRIPT }}
+          HOST_URL: "http://nhastudent.australiasoutheast.cloudapp.azure.com"
+        with:
+          host: ${{ secrets.SERVICE_HOSTS }}
+          username: ${{ secrets.SERVICES_HOST_DEPLOYMENT_USERNAME }}
+          key: ${{ secrets.SERVICES_HOST_PRIVATE_KEY }}
+          envs: DOCKER_HUB_USERNAME,DOCKER_HUB_ACCESS_TOKEN,DOCKER_HUB_REPOSITORY,TAG,APP_DEPLOYMENT_SCRIPT,HOST_URL
+          script_stop: true
+          script: |
+            echo "Make $APP_DEPLOYMENT_SCRIPT executable"
+            chmod +x $APP_DEPLOYMENT_SCRIPT
+            sh $APP_DEPLOYMENT_SCRIPT \
+            $DOCKER_HUB_USERNAME \
+            $DOCKER_HUB_ACCESS_TOKEN \
+            $DOCKER_HUB_REPOSITORY \
+            $TAG \
+            $HOST_URL \

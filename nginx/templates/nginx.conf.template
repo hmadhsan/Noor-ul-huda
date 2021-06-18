@@ -1,0 +1,45 @@
+events {
+  worker_connections  1024;
+}
+
+error_log /var/log/nginx/admin_application_error.log;
+
+http {
+
+  server {
+    listen       80;
+    listen  [::]:80;
+    server_name  admin_application;
+
+    access_log /var/log/nginx/admin_application_access.log;
+    
+    root   /usr/share/nginx/html;    
+    include /etc/nginx/mime.types;
+ 
+    gzip on;
+    gzip_min_length 1000;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/javascript;
+ 
+    location / {
+      expires -1;
+      index  index.html index.htm;      
+      add_header Cache-Control "public";
+      try_files $uri $uri/ /index.html;
+    }
+
+    # CSS and Javascript
+    location ~* \.(?:css|js)$ {
+        expires 1y;
+        access_log off;
+        add_header Cache-Control "public";
+    }
+
+    # Media: images, icons
+    location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz)$ {
+        expires 1y;
+        access_log off;
+        add_header Cache-Control "public";
+    }
+  }
+}
