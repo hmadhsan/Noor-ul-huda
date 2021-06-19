@@ -4,9 +4,9 @@ on:
     branches:
       - 'feature/*'
 env:
-  DEPLOYMENT_SCRIPT_FOLDER: '/tmp/admin-application'
+  DEPLOYMENT_SCRIPT_FOLDER: '/tmp/nha-admin-application'
   DEPLOYMENT_SCRIPT: 'deployment.sh'
-  APPLICATION_NAME: 'admin-application'
+  APPLICATION_NAME: 'nha-admin-application'
 jobs:
   build_deploy:
     name: Build & Deploy
@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
-      - name: Checkout Admin Application
+      - name: Checkout NHA Admin Application
         uses: actions/checkout@v2
       - name: Build
         run: |

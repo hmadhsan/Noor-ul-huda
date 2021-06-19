@@ -4,6 +4,6 @@ RUN apk add --no-cache bash
 
 RUN mkdir /opt/app
 
-COPY target/*.jar /opt/app/admin-application.jar
+COPY target/*.jar /opt/app/nha-admin-application.jar
 
-CMD ["java", "-Xms70M", "-Xmx150M", "-Xss512k", "-XshowSettings:vm", "-jar", "/opt/app/admin-application.jar"]
+CMD ["java", "-Xms70M", "-Xmx150M", "-Xss512k", "-XshowSettings:vm", "-jar", "/opt/app/nha-admin-application.jar"]

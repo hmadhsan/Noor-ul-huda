@@ -6,8 +6,8 @@ USERNAME=$1
 ACCESS_TOKEN=$2
 REPOSITORY=$3
 NEW_IMAGE=$4
-CONTAINER_NAME='admin_application'
-IMAGE_TAG='admin-application'
+CONTAINER_NAME='nha_admin_application'
+IMAGE_TAG='nha-admin-application'
 IMAGE="$REPOSITORY:$NEW_IMAGE"
 
 echo "Logging in docker hub"

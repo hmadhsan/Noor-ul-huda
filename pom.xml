@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.au.nha</groupId>
-	<artifactId>admin-application</artifactId>
+	<artifactId>nha-admin-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>admin-application</name>
+	<name>nha-admin-application</name>
 	<description>NHA Admin Application</description>
 	<properties>
 		<java.version>11</java.version>
