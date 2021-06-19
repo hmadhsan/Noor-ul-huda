@@ -36,6 +36,6 @@ echo "Starting container $CONTAINER using new image: $NEW_IMAGE"
 
 docker run --detach \
 --memory="250m" \
---publish 8081:80 \
+--publish 8081:8081 \
 --restart=always \
 --name "$CONTAINER_NAME" "$IMAGE"
