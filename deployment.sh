@@ -9,7 +9,6 @@ NEW_IMAGE=$4
 CONTAINER_NAME='admin_application'
 IMAGE_TAG='admin-application'
 IMAGE="$REPOSITORY:$NEW_IMAGE"
-HOST_URL=$5
 
 echo "Logging in docker hub"
 docker login --username "$USERNAME" --password "$ACCESS_TOKEN"
@@ -36,7 +35,7 @@ fi
 echo "Starting container $CONTAINER using new image: $NEW_IMAGE"
 
 docker run --detach \
---memory="10m" \
+--memory="250m" \
 --publish 8081:80 \
 --restart=always \
 --name "$CONTAINER_NAME" "$IMAGE"
