@@ -4,7 +4,6 @@ on:
     branches:
       - 'feature/*'
 env:
-  NODE_VERSION: '14.x'
   DEPLOYMENT_SCRIPT_FOLDER: '/tmp/admin-application'
   DEPLOYMENT_SCRIPT: 'deployment.sh'
   APPLICATION_NAME: 'admin-application'
@@ -13,16 +12,17 @@ jobs:
     name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v2.1.5
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          distribution: 'adopt'
+          java-version: 11
       - name: Checkout Admin Application
         uses: actions/checkout@v2
       - name: Build
         run: |
-          npm install
-          npm run build
+          chmod +x ./mvnw
+          ./mvnw --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |
@@ -57,12 +57,11 @@ jobs:
           DOCKER_HUB_REPOSITORY: ${{ secrets.DOCKER_HUB_REPOSITORY }}
           TAG: ${{ steps.tag.outputs.TAG }}
           APP_DEPLOYMENT_SCRIPT: ${{ env.DEPLOYMENT_SCRIPT_FOLDER }}/${{ env.DEPLOYMENT_SCRIPT }}
-          HOST_URL: "http://nhastudent.australiasoutheast.cloudapp.azure.com"
         with:
           host: ${{ secrets.SERVICE_HOSTS }}
           username: ${{ secrets.SERVICES_HOST_DEPLOYMENT_USERNAME }}
           key: ${{ secrets.SERVICES_HOST_PRIVATE_KEY }}
-          envs: DOCKER_HUB_USERNAME,DOCKER_HUB_ACCESS_TOKEN,DOCKER_HUB_REPOSITORY,TAG,APP_DEPLOYMENT_SCRIPT,HOST_URL
+          envs: DOCKER_HUB_USERNAME,DOCKER_HUB_ACCESS_TOKEN,DOCKER_HUB_REPOSITORY,TAG,APP_DEPLOYMENT_SCRIPT
           script_stop: true
           script: |
             echo "Make $APP_DEPLOYMENT_SCRIPT executable"
@@ -72,4 +71,3 @@ jobs:
             $DOCKER_HUB_ACCESS_TOKEN \
             $DOCKER_HUB_REPOSITORY \
             $TAG \
-            $HOST_URL \

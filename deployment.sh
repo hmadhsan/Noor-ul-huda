@@ -34,11 +34,11 @@ if [ -n "$CONTAINER" ]; then
 fi
 
 echo "Starting container $CONTAINER using new image: $NEW_IMAGE"
-echo "Setting host url to $HOST_URL"
 
 docker run --detach \
 --memory="10m" \
 --publish 8081:80 \
 --restart=always \
--e HOST_URL="$HOST_URL" \
 --name "$CONTAINER_NAME" "$IMAGE"
+
+nhait/applications:admin-application-9d35642

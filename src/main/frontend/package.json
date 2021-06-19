@@ -1,6 +1,7 @@
 {
   "name": "admin-application",
   "version": "0.1.0",
+  "homepage": "/nha/admin/",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^1.6.3",
