@@ -40,5 +40,3 @@ docker run --detach \
 --publish 8081:80 \
 --restart=always \
 --name "$CONTAINER_NAME" "$IMAGE"
-
-nhait/applications:admin-application-9d35642
