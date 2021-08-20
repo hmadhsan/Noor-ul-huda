@@ -53,7 +53,7 @@ jobs:
         with:
           source: ${{ env.DEPLOYMENT_SCRIPT }}
           target: ${{ env.DEPLOYMENT_SCRIPT_FOLDER }}
-          overwrite: true
+          rm: true
       - name: Execute Deployment Script
         uses: appleboy/ssh-action@master
         env:
