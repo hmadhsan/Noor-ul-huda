@@ -1,10 +1,10 @@
-package org.au.nha
+package org.au.nha.admin
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class AdminApplicationTests {
+class NhaAdminApplicationTests {
 
 	@Test
 	fun contextLoads() {

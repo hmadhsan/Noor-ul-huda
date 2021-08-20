@@ -1,11 +1,11 @@
-package org.au.nha
+package org.au.nha.admin
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class AdminApplication
+class NhaAdminApplication
 
 fun main(args: Array<String>) {
-	runApplication<AdminApplication>(*args)
+	runApplication<NhaAdminApplication>(*args)
 }
