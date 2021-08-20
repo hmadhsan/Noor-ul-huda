@@ -19,14 +19,18 @@ jobs:
           java-version: 11
       - name: Checkout NHA Admin Application
         uses: actions/checkout@v2
+      - name: Generate Version
+        id: version
+        run: |
+          echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
       - name: Build
         run: |
           chmod +x ./mvnw
-          ./mvnw --file pom.xml clean verify
+          ./mvnw -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |
-          echo "::set-output name=TAG::${{ env.APPLICATION_NAME }}-$(git rev-parse --short HEAD)"
+          echo "::set-output name=TAG::${{ env.APPLICATION_NAME }}-${{ steps.version.outputs.VERSION }}"
       - name: DockerHub Login
         uses: docker/login-action@v1.9.0
         with:
@@ -38,7 +42,7 @@ jobs:
           IMAGE_TAG: ${{ secrets.DOCKER_HUB_REPOSITORY }}:${{ steps.tag.outputs.TAG }}
         run: |
           echo "Docker image tag ${{ steps.tag.outputs.TAG }}"
-          docker build . --file Dockerfile --tag $IMAGE_TAG
+          docker build --build-arg BUILD_VERSION=${{ steps.version.outputs.VERSION }} . --file Dockerfile --tag $IMAGE_TAG
           docker push $IMAGE_TAG
       - name: Copy Deployment Script
         uses: appleboy/scp-action@master
