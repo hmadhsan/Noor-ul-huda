@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-node@v2.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: "${{ github.workspace }}/src/main/frontend/package-lock.json"
       - name: Build Frontend
         working-directory: "${{ github.workspace }}/src/main/frontend"
         run: |
