@@ -22,10 +22,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: "${{ github.workspace }}/src/main/frontend/package-lock.json"
       - name: Build Frontend
-        env:
-          FRONTEND_FOLDER: "${{ github.workspace }}/src/main/frontend"
+        working-directory: "${{ github.workspace }}/src/main/frontend"
         run: |
-          sh "$FRONTEND_FOLDER/build.sh"
+          sh build.sh
       - name: Setup JDK 11
         uses: actions/setup-java@v2
         with:
