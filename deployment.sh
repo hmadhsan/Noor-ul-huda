@@ -6,6 +6,7 @@ USERNAME=$1
 ACCESS_TOKEN=$2
 REPOSITORY=$3
 NEW_IMAGE=$4
+HOST_URL=$5
 CONTAINER_NAME='nha_admin_application'
 IMAGE_TAG='nha-admin-application'
 IMAGE="$REPOSITORY:$NEW_IMAGE"
@@ -35,7 +36,8 @@ fi
 echo "Starting container $CONTAINER using new image: $NEW_IMAGE"
 
 docker run --detach \
---memory="250m" \
+--memory="256m" \
 --publish 8081:8081 \
 --restart=always \
+--env NHA_HOST_URL="$HOST_URL" \
 --name "$CONTAINER_NAME" "$IMAGE"

@@ -17,10 +17,13 @@
 		<java.version>11</java.version>
 		<kotlin.version>1.5.21</kotlin.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
-		
+
+		<skip-frontend-build>false</skip-frontend-build>
 		<frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
 		<frontend-maven-plugin.nodeVersion>v14.17.1</frontend-maven-plugin.nodeVersion>
 		<frontend-maven-plugin.npmVersion>6.14.13</frontend-maven-plugin.npmVersion>
+
+		<jsoup.version>1.14.2</jsoup.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,6 +42,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -102,6 +111,7 @@
 				<version>${frontend-maven-plugin.version}</version>
 				<configuration>
 					<workingDirectory>${basedir}/src/main/frontend</workingDirectory>
+					<skip>${skip-frontend-build}</skip>
 				</configuration>
 				<executions>
 					<execution>
@@ -151,5 +161,14 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>ci</id>
+			<properties>
+				<skip-frontend-build>true</skip-frontend-build>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

@@ -4,6 +4,7 @@ on:
     branches:
       - 'feature/*'
 env:
+  NODE_VERSION: '14.x'
   DEPLOYMENT_SCRIPT_FOLDER: '/tmp/nha-admin-application'
   DEPLOYMENT_SCRIPT: 'deployment.sh'
   APPLICATION_NAME: 'nha-admin-application'
@@ -12,21 +13,33 @@ jobs:
     name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout NHA Admin Application
+        uses: actions/checkout@v2
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: "${{ github.workspace }}/src/main/frontend/package-lock.json"
+      - name: Build Frontend
+        env:
+          FRONTEND_FOLDER: "${{ github.workspace }}/src/main/frontend"
+        run: |
+          sh "$FRONTEND_FOLDER/build.sh"
       - name: Setup JDK 11
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: 11
-      - name: Checkout NHA Admin Application
-        uses: actions/checkout@v2
+          cache: maven
       - name: Generate Version
         id: version
         run: |
           echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
-      - name: Build
+      - name: Build Backend
         run: |
           chmod +x ./mvnw
-          ./mvnw -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
+          ./mvnw -Pci -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |
@@ -62,11 +75,12 @@ jobs:
           DOCKER_HUB_REPOSITORY: ${{ secrets.DOCKER_HUB_REPOSITORY }}
           TAG: ${{ steps.tag.outputs.TAG }}
           APP_DEPLOYMENT_SCRIPT: ${{ env.DEPLOYMENT_SCRIPT_FOLDER }}/${{ env.DEPLOYMENT_SCRIPT }}
+          HOST_URL: "http://nhastudent.australiasoutheast.cloudapp.azure.com"
         with:
           host: ${{ secrets.SERVICE_HOSTS }}
           username: ${{ secrets.SERVICES_HOST_DEPLOYMENT_USERNAME }}
           key: ${{ secrets.SERVICES_HOST_PRIVATE_KEY }}
-          envs: DOCKER_HUB_USERNAME,DOCKER_HUB_ACCESS_TOKEN,DOCKER_HUB_REPOSITORY,TAG,APP_DEPLOYMENT_SCRIPT
+          envs: DOCKER_HUB_USERNAME,DOCKER_HUB_ACCESS_TOKEN,DOCKER_HUB_REPOSITORY,TAG,APP_DEPLOYMENT_SCRIPT,HOST_URL
           script_stop: true
           script: |
             echo "Make $APP_DEPLOYMENT_SCRIPT executable"
@@ -76,3 +90,4 @@ jobs:
             $DOCKER_HUB_ACCESS_TOKEN \
             $DOCKER_HUB_REPOSITORY \
             $TAG \
+            $HOST_URL \
