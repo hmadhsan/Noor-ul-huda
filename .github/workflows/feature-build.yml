@@ -8,6 +8,7 @@ env:
   DEPLOYMENT_SCRIPT_FOLDER: '/tmp/nha-admin-application'
   DEPLOYMENT_SCRIPT: 'deployment.sh'
   APPLICATION_NAME: 'nha-admin-application'
+  FRONTEND_WORK_DIR: "${{ github.workspace }}/src/main/frontend"
 jobs:
   build_deploy:
     name: Build & Deploy
@@ -20,9 +21,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: "${{ github.workspace }}/src/main/frontend/package-lock.json"
+          cache-dependency-path: "${{ env.FRONTEND_WORK_DIR }}/package-lock.json"
       - name: Build Frontend
-        working-directory: "${{ github.workspace }}/src/main/frontend"
+        working-directory: "${{ env.FRONTEND_WORK_DIR }}"
         run: |
           sh build.sh
       - name: Setup JDK 11
@@ -37,8 +38,7 @@ jobs:
           echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
       - name: Build Backend
         run: |
-          chmod +x ./mvnw
-          ./mvnw -Pci -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
+          mvn -Pci -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |
