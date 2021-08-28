@@ -15,7 +15,7 @@
 	<properties>
 		<revision>0.0</revision>
 		<java.version>11</java.version>
-		<kotlin.version>1.5.21</kotlin.version>
+		<kotlin.version>1.5.30</kotlin.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 
 		<skip-frontend-build>false</skip-frontend-build>
