@@ -1,0 +1,38 @@
+name: Dependency update build
+on:
+  push:
+    branches:
+      - 'dependabot/**'
+env:
+  NODE_VERSION: '14.x'
+  VERIFY_BACKEND: ${{ startsWith(github.ref, 'refs/heads/dependabot/maven') }}
+  FRONTEND_WORK_DIR: "${{ github.workspace }}/src/main/frontend"
+jobs:
+  build:
+    name: Verify Dependency Updates
+    runs-on: ubuntu-latest
+    if: "startsWith(github.ref, 'refs/heads/dependabot/npm_and_yarn') || startsWith(github.ref, 'refs/heads/dependabot/maven')"
+    steps:
+      - name: Checkout Admin Application
+        uses: actions/checkout@v2
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: "${{ env.FRONTEND_WORK_DIR }}/package-lock.json"
+      - name: Verify Frontend
+        working-directory: ${{ env.FRONTEND_WORK_DIR }}
+        run: |
+          sh build.sh
+      - name: Setup JDK 11
+        if: ${{ env.VERIFY_BACKEND == 'true' }}
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 11
+          cache: maven
+      - name: Verify Backend
+        if: ${{ env.VERIFY_BACKEND == 'true' }}
+        run: |
+          mvn -Pci --file pom.xml clean verify
