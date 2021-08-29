@@ -1,3 +1,2 @@
 server:
-  servlet.contextPath: /nha-admin
   port: 8081

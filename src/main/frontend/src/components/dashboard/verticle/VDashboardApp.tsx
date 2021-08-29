@@ -1,10 +1,10 @@
 import { Box, Flex, Stack, useColorModeValue as mode } from '@chakra-ui/react'
 import * as React from 'react'
-import {  
-  BiEnvelope,  
+import {
   BiUserCircle,
 } from 'react-icons/bi'
-import {FaSchool} from 'react-icons/fa'
+
+import { FaSchool, FaFileInvoiceDollar } from 'react-icons/fa'
 
 import { AccountSwitcher } from './AccountSwitcher'
 import { NavGroup } from './NavGroup'
@@ -25,7 +25,7 @@ const VDashboardApp = () => {
               </NavGroup>
 
               <NavGroup label="Payments">
-                <NavItem icon={<BiEnvelope />} label="Invoices" />
+                <NavItem icon={<FaFileInvoiceDollar />} label="Invoices" />
               </NavGroup>
 
               <NavGroup label="Admin">

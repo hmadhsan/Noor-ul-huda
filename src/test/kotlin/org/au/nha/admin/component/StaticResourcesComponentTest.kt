@@ -22,9 +22,9 @@ exchange method has been deprecated in WebClient. Update WebTestClient if resolv
  **/
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
-class StaticResourcesComponentTest(
-    @Autowired private val webTestClient: WebTestClient,
-    @Value("\${server.servlet.contextPath}") private val contextPath: String) {
+class StaticResourcesComponentTest(@Autowired private val webTestClient: WebTestClient) {
+
+    private val contextPath = "/"
 
     @Test
     fun `Should get index page`() {
