@@ -9,6 +9,7 @@ import { FaSchool, FaFileInvoiceDollar } from 'react-icons/fa'
 import { AccountSwitcher } from './AccountSwitcher'
 import { NavGroup } from './NavGroup'
 import { NavItem } from './NavItem'
+import { Table } from '../../table/Table'
 
 const VDashboardApp = () => {
   return (
@@ -39,9 +40,10 @@ const VDashboardApp = () => {
             w="full"
             h="full"
             rounded="lg"
-            border="3px dashed currentColor"
-            color={mode('gray.200', 'gray.700')}
-          />
+            border="3px solid currentColor"
+          >
+            <Table />
+          </Box>
         </Box>
       </Flex>
     </Box>
