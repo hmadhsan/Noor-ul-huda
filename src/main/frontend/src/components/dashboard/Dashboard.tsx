@@ -9,7 +9,7 @@ import { PageHeader } from './PageHeader'
 import { ProfileDropdown } from './ProfileDropdown'
 import { useMobileMenuState } from './useMobileMenuState'
 
-const HDashboard = () => {
+const Dashboard = () => {
   const { isMenuOpen, toggle } = useMobileMenuState()
   return (
     <Flex direction="column" bg={mode('gray.100', 'gray.800')} height="100vh">
@@ -37,4 +37,4 @@ const HDashboard = () => {
   )
 }
 
-export default HDashboard
+export default Dashboard
