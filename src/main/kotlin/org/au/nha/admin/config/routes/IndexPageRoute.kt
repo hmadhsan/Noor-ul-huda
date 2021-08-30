@@ -11,11 +11,8 @@ import org.springframework.web.reactive.function.server.router
 class IndexPageRoute {
 
     @Bean
-    fun indexRouter(
-        @Value("\${server.servlet.contextPath}") contextPath: String,
-        @Value("classpath:/public/index.html") indexHtml: Resource
-    ) = router {
-        GET(contextPath) {
+    fun indexRouter(@Value("classpath:/public/index.html") indexHtml: Resource) = router {
+        GET("/") {
             ok().contentType(TEXT_HTML).bodyValue(indexHtml)
         }
     }
