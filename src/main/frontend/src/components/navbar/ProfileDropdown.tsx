@@ -11,7 +11,6 @@ import {
   UseMenuButtonProps,
   useColorModeValue as mode,
 } from '@chakra-ui/react'
-import * as React from 'react'
 
 const UserAvatar = () => (
   <Avatar
@@ -51,9 +50,6 @@ export const ProfileDropdown = () => (
           </Text>
         </Box>
       </HStack>
-      <MenuItem fontWeight="medium">Your Profile</MenuItem>
-      <MenuItem fontWeight="medium">Feedback & Support</MenuItem>
-      <MenuItem fontWeight="medium">Account Settings</MenuItem>
       <MenuItem fontWeight="medium" color={mode('red.500', 'red.300')}>
         Sign out
       </MenuItem>

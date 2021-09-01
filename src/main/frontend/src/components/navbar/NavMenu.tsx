@@ -1,13 +1,6 @@
 import { Box, Flex, HStack } from '@chakra-ui/react'
-import * as React from 'react'
-import {
-  BiUserCircle,
-} from 'react-icons/bi'
-
-import { RiAdminLine } from "react-icons/ri";
-
-import { MdPayment } from 'react-icons/md'
-
+import { BiUserCircle } from 'react-icons/bi'
+import { MdDashboard } from 'react-icons/md'
 import { NavItem } from './NavItem'
 
 const MobileNavMenu = (props: { isOpen?: boolean }) => {
@@ -26,9 +19,8 @@ const MobileNavMenu = (props: { isOpen?: boolean }) => {
       w="full"
     >
       <Box px="4">
-        <NavItem.Mobile active label="Enrolments" />
-        <NavItem.Mobile label="Payments" />
-        <NavItem.Mobile label="Admin" />
+        <NavItem.Mobile active label="Dashboard" />
+        <NavItem.Mobile label="Enrolments" />
       </Box>
     </Flex>
   )
@@ -36,9 +28,8 @@ const MobileNavMenu = (props: { isOpen?: boolean }) => {
 
 const DesktopNavMenu = () => (
   <HStack spacing="3" flex="1" display={{ base: 'none', lg: 'flex' }}>
-    <NavItem.Desktop active icon={<BiUserCircle />} label="Enrolments" />
-    <NavItem.Desktop icon={<MdPayment />} label="Payments" />
-    <NavItem.Desktop icon={<RiAdminLine />} label="Admin" />
+    <NavItem.Desktop active icon={<MdDashboard />} label="Dashboard" />
+    <NavItem.Desktop icon={<BiUserCircle />} label="Enrolments" />
   </HStack>
 )
 
