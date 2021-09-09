@@ -1,18 +1,23 @@
-import { Flex, useColorModeValue as mode } from '@chakra-ui/react'
-import { PageContent } from './PageContent'
-import { PageHeader } from './PageHeader'
-
-import NavBar  from '../navbar/NavBar'
+import { Box, SimpleGrid, useColorModeValue as mode } from "@chakra-ui/react"
+import data from "./data.json"
+import { Stat } from "./Stat"
+import { StatLabel } from "./StatLabel"
+import { StatNumber } from "./StatNumber"
 
 const Dashboard = () => {
-  
   return (
-    <Flex direction="column" bg={mode('gray.100', 'gray.800')} height="100vh">
-      <NavBar />  
-
-      <PageHeader />
-      <PageContent />
-    </Flex>
+    <Box as="section" bg={mode("gray.50", "gray.800")} p="10">
+      <Box maxW="7xl" mx="auto" px={{ base: "6", md: "8" }}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing="6">
+          {data.map(({ label, value }) => (
+            <Stat key={label}>
+              <StatLabel>{label}</StatLabel>
+              <StatNumber>{value}</StatNumber>
+            </Stat>
+          ))}
+        </SimpleGrid>
+      </Box>
+    </Box>
   )
 }
 

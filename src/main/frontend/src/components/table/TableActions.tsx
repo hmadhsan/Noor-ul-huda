@@ -8,17 +8,17 @@ import {
   InputGroup,
   InputLeftElement,
   Select,
-  Stack,
-} from '@chakra-ui/react'
-import * as React from 'react'
-import { BsSearch } from 'react-icons/bs'
-import { RiAddFill, RiArrowRightUpLine } from 'react-icons/ri'
+  Stack
+} from "@chakra-ui/react"
+import * as React from "react"
+import { BsSearch } from "react-icons/bs"
+import { RiAddFill, RiArrowRightUpLine } from "react-icons/ri"
 
 export const TableActions = () => {
   return (
-    <Stack spacing="4" direction={{ base: 'column', md: 'row' }} justify="space-between">
+    <Stack spacing="4" direction={{ base: "column", md: "row" }} justify="space-between">
       <HStack>
-        <FormControl minW={{ md: '320px' }} id="search">
+        <FormControl minW={{ md: "320px" }} id="search">
           <InputGroup size="sm">
             <FormLabel srOnly>Filter by name or email</FormLabel>
             <InputLeftElement pointerEvents="none" color="gray.400">
@@ -27,7 +27,7 @@ export const TableActions = () => {
             <Input rounded="base" type="search" placeholder="Filter by name or email..." />
           </InputGroup>
         </FormControl>
-        <Select w={{ base: '300px', md: 'unset' }} rounded="base" size="sm" placeholder="All roles">
+        <Select w={{ base: "300px", md: "unset" }} rounded="base" size="sm" placeholder="All roles">
           <option>All roles</option>
           <option>UI Designers</option>
           <option>Marketing Directors</option>

@@ -1,26 +1,70 @@
-import { Flex, HStack } from '@chakra-ui/react'
-import { MobileHamburgerMenu } from "./MobileHamburgerMenu"
-import { NavMenu } from "./NavMenu"
-import { ProfileDropdown } from "./ProfileDropdown"
-import { useMobileMenuState } from "./useMobileMenuState"
+import { Box, Stack } from "@chakra-ui/react"
+import { AccountSwitcher } from "./AccountSwitcher"
+import { ScrollArea } from "./ScrollArea"
+import { NavSectionTitle } from "./NavSectionTitle"
+import { SidebarLink } from "./SidebarLink"
+import { BiUserCircle } from "react-icons/bi"
+import { FaSchool, FaFileInvoiceDollar } from "react-icons/fa"
 
 const NavBar = () => {
-    const { isMenuOpen, toggle } = useMobileMenuState()
-
-    return (
-        <Flex align="center" bg="blue.600" color="white" px="6" minH="16">
-            <Flex justify="space-between" align="center" w="full">
-                <MobileHamburgerMenu onClick={toggle} isOpen={isMenuOpen} />
-                <NavMenu.Mobile isOpen={isMenuOpen} />
-
-                <NavMenu.Desktop />
-
-                <HStack spacing="3">
-                    <ProfileDropdown />
-                </HStack>
-            </Flex>
-        </Flex>
-    )
+  return (
+    <Box
+      as="nav"
+      display="block"
+      flex="1"
+      width="var(--sidebar-width)"
+      left="0"
+      py="5"
+      px="3"
+      color="gray.200"
+      position="fixed"
+    >
+      <Box fontSize="sm" lineHeight="tall">
+        <Box
+          as="a"
+          href="#"
+          p="3"
+          display="block"
+          transition="background 0.1s"
+          rounded="xl"
+          _hover={{ bg: "whiteAlpha.200" }}
+          whiteSpace="nowrap"
+          width="var(--sidebar-width)"
+          px="4"
+          py="4"
+        >
+          <AccountSwitcher />
+          <Box></Box>
+        </Box>
+        <ScrollArea pt="5" pb="6">
+          <Stack pb="6">
+            <NavSectionTitle>Enrolments</NavSectionTitle>
+            <SidebarLink href="#" icon={<BiUserCircle />}>
+              Maktab
+            </SidebarLink>
+            <SidebarLink href="#" icon={<BiUserCircle />}>
+              Hifth
+            </SidebarLink>
+            <SidebarLink href="/enrolments/tajweed" icon={<BiUserCircle />}>
+              Tajweed
+            </SidebarLink>
+          </Stack>
+          <Stack pb="6">
+            <NavSectionTitle>Payments</NavSectionTitle>
+            <SidebarLink href="#" icon={<FaFileInvoiceDollar />}>
+              Invoices
+            </SidebarLink>
+          </Stack>
+          <Stack pb="6">
+            <NavSectionTitle>Admin</NavSectionTitle>
+            <SidebarLink href="#" icon={<FaSchool />}>
+              Campuses
+            </SidebarLink>
+          </Stack>
+        </ScrollArea>
+      </Box>
+    </Box>
+  )
 }
 
 export default NavBar
