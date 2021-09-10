@@ -1,5 +1,6 @@
 import { Box, BoxProps, HStack, Text, useColorModeValue as mode } from "@chakra-ui/react"
 import * as React from "react"
+import { Link } from "react-router-dom"
 
 interface SidebarLinkProps extends BoxProps {
   href: string
@@ -10,8 +11,8 @@ export const SidebarLink = (props: SidebarLinkProps) => {
   const { children, href, icon, ...rest } = props
   return (
     <Box
-      as="a"
-      href={href}
+      as={Link}
+      to={href}
       marginEnd="2"
       fontSize="sm"
       display="block"

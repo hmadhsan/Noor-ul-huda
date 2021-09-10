@@ -15,7 +15,7 @@ import {
   Heading,
   useColorModeValue as mode
 } from "@chakra-ui/react"
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 
 export const App = () => {
   const { isOpen, toggle } = useMobileMenuState()
@@ -43,58 +43,56 @@ export const App = () => {
           pb="6"
           rounded={{ md: "lg" }}
         >
-          <Router>
-            <Flex direction="column" height="full">
-              <Flex w="full" py="4" justify="space-between" align="center" px="10">
-                <Flex align="center" minH="8">
-                  <MobileMenuButton onClick={toggle} isOpen={isOpen} />
-                  <NavBreadcrumb />
-                </Flex>
-              </Flex>
-              <Flex direction="column" flex="1" overflow="auto" px="10" pt="8">
-                <Switch>
-                  <Route exact path="/">
-                    <Heading size="md" fontWeight="extrabold" mb="6">
-                      Dashboard
-                    </Heading>
-                    <Dashboard />
-                  </Route>
-                  <Route exact path="/enrolments/tajweed">
-                    <Heading size="md" fontWeight="extrabold" mb="6">
-                      Tajweed Enrolments
-                    </Heading>
-                    <Box flex="1" borderWidth="3px" rounded="xl">
-                      <Tabs isFitted>
-                        <TabList>
-                          <Tab>New</Tab>
-                          <Tab>Pending</Tab>
-                          <Tab>Confirmed</Tab>
-                          <Tab>Finalized</Tab>
-                        </TabList>
-                        <TabPanels>
-                          <TabPanel>
-                            <Table />
-                          </TabPanel>
-                          <TabPanel>
-                            <Table />
-                          </TabPanel>
-                          <TabPanel>
-                            <Table />
-                          </TabPanel>
-                          <TabPanel>
-                            <Table />
-                          </TabPanel>
-                        </TabPanels>
-                      </Tabs>
-                    </Box>
-                  </Route>
-                  <Route path="*">
-                    <h1 className="text-center">Four oh Four</h1>
-                  </Route>
-                </Switch>
+          <Flex direction="column" height="full">
+            <Flex w="full" py="4" justify="space-between" align="center" px="10">
+              <Flex align="center" minH="8">
+                <MobileMenuButton onClick={toggle} isOpen={isOpen} />
+                <NavBreadcrumb />
               </Flex>
             </Flex>
-          </Router>
+            <Flex direction="column" flex="1" overflow="auto" px="10" pt="8">
+              <Switch>
+                <Route exact path="/">
+                  <Heading size="md" fontWeight="extrabold" mb="6">
+                    Dashboard
+                  </Heading>
+                  <Dashboard />
+                </Route>
+                <Route exact path="/enrolments/tajweed">
+                  <Heading size="md" fontWeight="extrabold" mb="6">
+                    Tajweed Enrolments
+                  </Heading>
+                  <Box flex="1" borderWidth="3px" rounded="xl">
+                    <Tabs isFitted>
+                      <TabList>
+                        <Tab>New</Tab>
+                        <Tab>Pending</Tab>
+                        <Tab>Confirmed</Tab>
+                        <Tab>Finalized</Tab>
+                      </TabList>
+                      <TabPanels>
+                        <TabPanel>
+                          <Table />
+                        </TabPanel>
+                        <TabPanel>
+                          <Table />
+                        </TabPanel>
+                        <TabPanel>
+                          <Table />
+                        </TabPanel>
+                        <TabPanel>
+                          <Table />
+                        </TabPanel>
+                      </TabPanels>
+                    </Tabs>
+                  </Box>
+                </Route>
+                <Route path="*">
+                  <h1 className="text-center">Four oh Four</h1>
+                </Route>
+              </Switch>
+            </Flex>
+          </Flex>
         </Box>
       </Box>
     </Flex>
