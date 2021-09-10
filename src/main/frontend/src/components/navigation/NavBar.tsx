@@ -1,10 +1,11 @@
 import { Box, Stack } from "@chakra-ui/react"
-import { AccountSwitcher } from "./AccountSwitcher"
+import { AccountSwitcher } from "./UserAccount"
 import { ScrollArea } from "./ScrollArea"
 import { NavSectionTitle } from "./NavSectionTitle"
 import { SidebarLink } from "./SidebarLink"
 import { BiUserCircle } from "react-icons/bi"
 import { FaSchool, FaFileInvoiceDollar } from "react-icons/fa"
+import { MdDashboard } from "react-icons/md"
 
 const NavBar = () => {
   return (
@@ -34,9 +35,13 @@ const NavBar = () => {
           py="4"
         >
           <AccountSwitcher />
-          <Box></Box>
         </Box>
         <ScrollArea pt="5" pb="6">
+          <Stack pb="6">
+            <SidebarLink href="/" icon={<MdDashboard />}>
+              Dashboard
+            </SidebarLink>
+          </Stack>
           <Stack pb="6">
             <NavSectionTitle>Enrolments</NavSectionTitle>
             <SidebarLink href="#" icon={<BiUserCircle />}>
