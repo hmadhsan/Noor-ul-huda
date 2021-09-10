@@ -6,15 +6,15 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue as mode,
-} from '@chakra-ui/react'
-import * as React from 'react'
-import { columns, data } from './_data'
+  useColorModeValue as mode
+} from "@chakra-ui/react"
+import * as React from "react"
+import { columns, data } from "./_data"
 
 export const TableContent = () => {
   return (
     <Table my="8" borderWidth="1px" fontSize="sm">
-      <Thead bg={mode('gray.50', 'gray.800')}>
+      <Thead bg={mode("gray.50", "gray.800")}>
         <Tr>
           {columns.map((column, index) => (
             <Th whiteSpace="nowrap" scope="col" key={index}>

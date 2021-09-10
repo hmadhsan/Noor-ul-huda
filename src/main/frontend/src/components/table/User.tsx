@@ -1,5 +1,5 @@
-import { Box, Stack } from '@chakra-ui/react'
-import * as React from 'react'
+import { Box, Stack } from "@chakra-ui/react"
+import * as React from "react"
 
 interface UserProps {
   data: {

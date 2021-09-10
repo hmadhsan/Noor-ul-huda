@@ -1,39 +1,24 @@
-import { Flex, HStack, useColorModeValue as mode } from '@chakra-ui/react'
-import * as React from 'react'
-import { Logo } from './Logo'
-import { MobileHamburgerMenu } from './MobileHamburgerMenu'
-import { NavMenu } from './NavMenu'
-import { Notification } from './Notification'
-import { PageContent } from './PageContent'
-import { PageHeader } from './PageHeader'
-import { ProfileDropdown } from './ProfileDropdown'
-import { useMobileMenuState } from './useMobileMenuState'
+import { Box, Heading, SimpleGrid, useColorModeValue as mode } from "@chakra-ui/react"
+import data from "./data.json"
+import { StatCard } from "./StatCard"
+import React from "react"
 
 const Dashboard = () => {
-  const { isMenuOpen, toggle } = useMobileMenuState()
   return (
-    <Flex direction="column" bg={mode('gray.100', 'gray.800')} height="100vh">
-      <Flex align="center" bg="blue.600" color="white" px="6" minH="16">
-        <Flex justify="space-between" align="center" w="full">
-          <MobileHamburgerMenu onClick={toggle} isOpen={isMenuOpen} />
-          <NavMenu.Mobile isOpen={isMenuOpen} />
-          
-          {/* Desktop Navigation Menu */}
-          <NavMenu.Desktop />
-
-          {/* Mobile Logo placement */}
-          <Logo flex={{ base: '1', lg: '0' }} display={{ lg: 'none' }} flexShrink={0} h="5" />
-
-          <HStack spacing="3">
-            <Notification display={{ base: 'none', lg: 'inline-flex' }} />
-            <ProfileDropdown />
-          </HStack>
-        </Flex>
-      </Flex>
-
-      <PageHeader />
-      <PageContent />
-    </Flex>
+    <React.Fragment>
+      <Heading size="md" fontWeight="extrabold" mb="6">
+        Dashboard
+      </Heading>
+      <Box as="section" bg={mode("gray.50", "gray.800")} p="10">
+        <Box maxW="7xl" mx="auto" px={{ base: "6", md: "8" }}>
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing="6">
+            {data.map((stat, idx) => (
+              <StatCard key={idx} data={stat} />
+            ))}
+          </SimpleGrid>
+        </Box>
+      </Box>
+    </React.Fragment>
   )
 }
 

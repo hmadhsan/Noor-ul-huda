@@ -26,10 +26,23 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "coverage": "react-scripts test --coverage --watchAll=false",
+    "verify": "lint-staged && npm run coverage",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\""
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:jest-dom/recommended",
+      "plugin:testing-library/react",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier",
+      "testing-library"
+    ]
   },
   "browserslist": {
     "production": [
@@ -42,5 +55,37 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,json}": [
+      "prettier --write"
+    ],
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": false,
+    "semi": false,
+    "useTabs": false,
+    "tabWidth": 2,
+    "trailingComma": "none"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run verify --prefix src/main/frontend"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest-dom": "^3.9.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-testing-library": "^4.12.2",
+    "lint-staged": "^11.1.2",
+    "msw": "^0.35.0",
+    "prettier": "2.4.0",
+    "simple-git-hooks": "^2.6.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
