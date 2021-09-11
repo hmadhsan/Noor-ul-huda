@@ -1,5 +1,4 @@
 import { Box, Flex, FlexProps, HStack, Img, useMenuButton } from "@chakra-ui/react"
-import * as React from "react"
 import { HiSelector } from "react-icons/hi"
 
 export const UserAccountButton = (props: FlexProps) => {
@@ -33,7 +32,7 @@ export const UserAccountButton = (props: FlexProps) => {
         />
         <Box textAlign="start">
           <Box isTruncated fontWeight="semibold">
-            Chakra UI
+            NHA User
           </Box>
           <Box fontSize="xs" color="gray.400">
             ID 123343

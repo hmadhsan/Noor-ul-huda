@@ -8,10 +8,10 @@ export const AccountSwitcher = () => {
       <UserAccountButton />
       <MenuList shadow="lg" py="4" color={useColorModeValue("gray.600", "gray.200")} px="3">
         <Text fontWeight="medium" mb="2">
-          joe.biden@chakra-ui.com
+          user@nha.org.au
         </Text>
         <MenuDivider />
-        <MenuItem rounded="md">Workspace settings</MenuItem>
+        <MenuItem rounded="md">Settings</MenuItem>
         <MenuDivider />
         <MenuItem rounded="md">Logout</MenuItem>
       </MenuList>
