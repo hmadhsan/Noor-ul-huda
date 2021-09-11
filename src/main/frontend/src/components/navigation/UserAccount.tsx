@@ -1,8 +1,7 @@
 import { Menu, MenuDivider, MenuItem, MenuList, Text, useColorModeValue } from "@chakra-ui/react"
-import * as React from "react"
 import { UserAccountButton } from "./UserAccountButton"
 
-export const AccountSwitcher = () => {
+export const UserAccount = () => {
   return (
     <Menu>
       <UserAccountButton />
