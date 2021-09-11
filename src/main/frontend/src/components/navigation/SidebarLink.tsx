@@ -1,5 +1,4 @@
 import { Box, BoxProps, HStack, Text, useColorModeValue as mode } from "@chakra-ui/react"
-import * as React from "react"
 import { Link } from "react-router-dom"
 
 interface SidebarLinkProps extends BoxProps {

@@ -1,5 +1,4 @@
 import { Badge } from "@chakra-ui/react"
-import * as React from "react"
 import { User } from "./User"
 
 export const data = [

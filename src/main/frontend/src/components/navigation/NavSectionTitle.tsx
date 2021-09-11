@@ -1,5 +1,4 @@
 import { Text, TextProps } from "@chakra-ui/react"
-import * as React from "react"
 
 export const NavSectionTitle = (props: TextProps) => (
   <Text

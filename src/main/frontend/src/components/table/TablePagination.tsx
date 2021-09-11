@@ -1,5 +1,4 @@
 import { Button, ButtonGroup, Flex, Text, useColorModeValue as mode } from "@chakra-ui/react"
-import * as React from "react"
 import { data } from "./_data"
 
 export const TablePagination = () => {

@@ -10,7 +10,6 @@ import {
   Select,
   Stack
 } from "@chakra-ui/react"
-import * as React from "react"
 import { BsSearch } from "react-icons/bs"
 import { RiAddFill, RiArrowRightUpLine } from "react-icons/ri"
 
