@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react"
 import { useTable, usePagination, useSortBy, Column } from "react-table"
 import { format, add } from "date-fns"
-import { FaSortAlphaUp, FaSortAlphaDown } from "react-icons/fa"
+import { FaSortAmountUp, FaSortAmountDown } from "react-icons/fa"
 
 interface TajweedEnrolment {
   name: string
@@ -159,9 +159,9 @@ const EnrolmentList = () => {
                         <Text>{column.render("Header")}</Text>
                         {column.isSorted ? (
                           column.isSortedDesc ? (
-                            <FaSortAlphaDown />
+                            <FaSortAmountDown />
                           ) : (
-                            <FaSortAlphaUp />
+                            <FaSortAmountUp />
                           )
                         ) : null}
                       </HStack>
