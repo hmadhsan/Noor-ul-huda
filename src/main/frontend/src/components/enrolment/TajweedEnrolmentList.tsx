@@ -22,8 +22,9 @@ import {
   HStack,
   useColorModeValue as mode
 } from "@chakra-ui/react"
-import { useTable, usePagination, Column } from "react-table"
+import { useTable, usePagination, useSortBy, Column } from "react-table"
 import { format, add } from "date-fns"
+import { FaSortAlphaUp, FaSortAlphaDown } from "react-icons/fa"
 
 interface TajweedEnrolment {
   name: string
@@ -128,6 +129,7 @@ const EnrolmentList = () => {
       data,
       initialState: { pageSize: 2 }
     },
+    useSortBy,
     usePagination
   )
 
@@ -147,8 +149,22 @@ const EnrolmentList = () => {
               {headerGroups.map((headerGroup) => (
                 <Tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                    <Th whiteSpace="nowrap" scope="col" {...column.getHeaderProps()}>
-                      {column.render("Header")}
+                    <Th
+                      whiteSpace="nowrap"
+                      scope="col"
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      textAlign="center"
+                    >
+                      <HStack justify="center">
+                        <Text>{column.render("Header")}</Text>
+                        {column.isSorted ? (
+                          column.isSortedDesc ? (
+                            <FaSortAlphaDown />
+                          ) : (
+                            <FaSortAlphaUp />
+                          )
+                        ) : null}
+                      </HStack>
                     </Th>
                   ))}
                 </Tr>
@@ -161,7 +177,7 @@ const EnrolmentList = () => {
                   <Tr {...row.getRowProps()}>
                     {row.cells.map((cell) => {
                       return (
-                        <Td whiteSpace="nowrap" {...cell.getCellProps()}>
+                        <Td whiteSpace="nowrap" {...cell.getCellProps()} textAlign="center">
                           {cell.render("Cell")}
                         </Td>
                       )

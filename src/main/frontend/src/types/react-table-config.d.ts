@@ -7,9 +7,19 @@ Temporary workaround for version 7
 import { UsePaginationOptions, UsePaginationInstanceProps, UsePaginationState } from "react-table"
 
 declare module "react-table" {
-  export interface TableOptions<D extends object> extends UsePaginationOptions<D> {}
+  export interface Column<D extends object = {}> extends UseSortByColumnOptions<D> {}
 
-  export interface TableInstance<D extends object = {}> extends UsePaginationInstanceProps<D> {}
+  export interface ColumnInstance<D extends object = {}> extends UseSortByColumnProps<D> {}
 
-  export interface TableState<D extends object = {}> extends UsePaginationState<D> {}
+  export interface TableState<D extends object = {}>
+    extends UsePaginationState<D>,
+      UseSortByState<D> {}
+
+  export interface TableOptions<D extends object>
+    extends UsePaginationOptions<D>,
+      UseSortByOptions<D> {}
+
+  export interface TableInstance<D extends object = {}>
+    extends UsePaginationInstanceProps<D>,
+      UseSortByInstanceProps<D> {}
 }
