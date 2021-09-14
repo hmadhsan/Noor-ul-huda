@@ -19,12 +19,18 @@ import {
   Text,
   Select,
   Spacer,
+  Stack,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftElement,
   HStack,
   useColorModeValue as mode
 } from "@chakra-ui/react"
-import { useTable, usePagination, useSortBy, Column } from "react-table"
+import { useTable, usePagination, useSortBy, useGlobalFilter, Column } from "react-table"
 import { format, add } from "date-fns"
-import { FaSortAmountUp, FaSortAmountDown } from "react-icons/fa"
+import { FaSortAmountUp, FaSortAmountDown, FaSearch } from "react-icons/fa"
 
 interface TajweedEnrolment {
   name: string
@@ -113,6 +119,8 @@ const EnrolmentList = () => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    state,
+    setGlobalFilter,
     page,
     canPreviousPage,
     canNextPage,
@@ -126,9 +134,9 @@ const EnrolmentList = () => {
   } = useTable<TajweedEnrolment>(
     {
       columns,
-      data,
-      initialState: { pageSize: 2 }
+      data
     },
+    useGlobalFilter,
     useSortBy,
     usePagination
   )
@@ -137,6 +145,24 @@ const EnrolmentList = () => {
     <Box as="section" py="12">
       <Box maxW={{ base: "xl", md: "7xl" }} mx="auto" px={{ base: "6", md: "8" }}>
         <Box overflowX="auto">
+          <Stack spacing="4" direction={{ base: "column", md: "row" }} justify="space-between">
+            <HStack>
+              <FormControl minW={{ md: "320px" }} id="search">
+                <InputGroup size="sm">
+                  <FormLabel srOnly>Filter by name or email</FormLabel>
+                  <InputLeftElement pointerEvents="none" color="gray.400">
+                    <FaSearch />
+                  </InputLeftElement>
+                  <Input
+                    rounded="base"
+                    type="search"
+                    value={state.globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                  />
+                </InputGroup>
+              </FormControl>
+            </HStack>
+          </Stack>
           <Table
             my="8"
             borderWidth="1px"
