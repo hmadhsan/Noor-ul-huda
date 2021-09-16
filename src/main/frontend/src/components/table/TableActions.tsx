@@ -1,45 +1,43 @@
-import {
-  Button,
-  ButtonGroup,
-  FormControl,
-  FormLabel,
-  HStack,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Select,
-  Stack
-} from "@chakra-ui/react"
-import { BsSearch } from "react-icons/bs"
-import { RiAddFill, RiArrowRightUpLine } from "react-icons/ri"
+import { HStack, Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react"
+import { FaSearch } from "react-icons/fa"
 
-export const TableActions = () => {
+import {
+  UseTableInstanceProps,
+  UseGlobalFiltersState,
+  UseGlobalFiltersInstanceProps,
+  UseGlobalFiltersOptions
+} from "react-table"
+
+type TableActionsProps<T extends object> = UseTableInstanceProps<T> &
+  Partial<UseGlobalFiltersState<T>> &
+  UseGlobalFiltersInstanceProps<T> &
+  UseGlobalFiltersOptions<T>
+
+export const TableActions = <T extends object>({
+  state,
+  setGlobalFilter
+}: TableActionsProps<T>) => {
   return (
-    <Stack spacing="4" direction={{ base: "column", md: "row" }} justify="space-between">
+    <Stack
+      spacing="4"
+      direction={{ base: "column", md: "row" }}
+      justify="space-between"
+      mt="1px"
+      ml="1px"
+    >
       <HStack>
-        <FormControl minW={{ md: "320px" }} id="search">
-          <InputGroup size="sm">
-            <FormLabel srOnly>Filter by name or email</FormLabel>
-            <InputLeftElement pointerEvents="none" color="gray.400">
-              <BsSearch />
-            </InputLeftElement>
-            <Input rounded="base" type="search" placeholder="Filter by name or email..." />
-          </InputGroup>
-        </FormControl>
-        <Select w={{ base: "300px", md: "unset" }} rounded="base" size="sm" placeholder="All roles">
-          <option>All roles</option>
-          <option>UI Designers</option>
-          <option>Marketing Directors</option>
-        </Select>
+        <InputGroup size="sm" minW={{ md: "20rem" }}>
+          <InputLeftElement pointerEvents="none" color="gray.400">
+            <FaSearch />
+          </InputLeftElement>
+          <Input
+            rounded="base"
+            type="search"
+            value={state.globalFilter || ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+          />
+        </InputGroup>
       </HStack>
-      <ButtonGroup size="sm" variant="outline">
-        <Button iconSpacing="1" leftIcon={<RiAddFill fontSize="1.25em" />}>
-          New member
-        </Button>
-        <Button iconSpacing="1" leftIcon={<RiArrowRightUpLine fontSize="1.25em" />}>
-          Export CSV
-        </Button>
-      </ButtonGroup>
     </Stack>
   )
 }

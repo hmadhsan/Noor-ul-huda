@@ -1,20 +1,70 @@
-import { Button, ButtonGroup, Flex, Text, useColorModeValue as mode } from "@chakra-ui/react"
-import { data } from "./_data"
+import {
+  Button,
+  ButtonGroup,
+  HStack,
+  Spacer,
+  Text,
+  Select,
+  useColorModeValue as mode
+} from "@chakra-ui/react"
+import { UsePaginationInstanceProps, UseTableInstanceProps } from "react-table"
 
-export const TablePagination = () => {
+type TablePaginationProps<T extends object> = Pick<UseTableInstanceProps<T>, "state"> &
+  UsePaginationInstanceProps<T>
+
+const ROWS_PER_PAGE = [10, 15, 25]
+
+export const TablePagination = <T extends object>(props: TablePaginationProps<T>) => {
+  const {
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize }
+  } = props
+
   return (
-    <Flex align="center" justify="space-between">
-      <Text color={mode("gray.600", "gray.400")} fontSize="sm">
-        {data.length} members
+    <HStack height="2.5rem">
+      <Text color={mode("gray.600", "gray.400")} fontSize="md" fontWeight="semibold">
+        Page {pageIndex + 1} of {pageOptions.length}
       </Text>
+      <Spacer />
+      <Text color={mode("gray.600", "gray.400")} fontSize="md">
+        Rows per page
+      </Text>
+      <Select
+        size="sm"
+        width="4rem"
+        rounded="base"
+        value={pageSize}
+        onChange={(e) => {
+          setPageSize(Number(e.target.value))
+        }}
+      >
+        {ROWS_PER_PAGE.map((pageSize) => (
+          <option key={pageSize} value={pageSize}>
+            {pageSize}
+          </option>
+        ))}
+      </Select>
       <ButtonGroup variant="outline" size="sm">
-        <Button as="a" rel="prev">
+        <Button as="a" rel="prev" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          First page
+        </Button>
+        <Button as="a" rel="prev" onClick={() => previousPage()} disabled={!canPreviousPage}>
           Previous
         </Button>
-        <Button as="a" rel="next">
+        <Button as="a" rel="next" onClick={() => nextPage()} disabled={!canNextPage}>
           Next
         </Button>
+        <Button as="a" rel="prev" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          Last page
+        </Button>
       </ButtonGroup>
-    </Flex>
+    </HStack>
   )
 }
