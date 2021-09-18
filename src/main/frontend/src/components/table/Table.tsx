@@ -8,13 +8,23 @@ import { useTable, usePagination, useSortBy, useGlobalFilter, Column } from "rea
 interface TableProps<T extends object> {
   tableColumns: Column<T>[]
   tableRows: T[]
+  pageSize?: number
 }
 
-export const Table = <T extends object>({ tableColumns, tableRows }: TableProps<T>) => {
+export const Table = <T extends object>({
+  tableColumns,
+  tableRows,
+  pageSize = 10
+}: TableProps<T>) => {
   const columns = useMemo<Column<T>[]>(() => tableColumns, [tableColumns])
   const data = useMemo<T[]>(() => tableRows, [tableRows])
 
-  const tableInstance = useTable<T>({ columns, data }, useGlobalFilter, useSortBy, usePagination)
+  const tableInstance = useTable<T>(
+    { columns, data, initialState: { pageSize } },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  )
 
   return (
     <Box as="section" py="12">

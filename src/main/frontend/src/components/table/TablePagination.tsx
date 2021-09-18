@@ -45,9 +45,9 @@ export const TablePagination = <T extends object>(props: TablePaginationProps<T>
           setPageSize(Number(e.target.value))
         }}
       >
-        {ROWS_PER_PAGE.map((pageSize) => (
-          <option key={pageSize} value={pageSize}>
-            {pageSize}
+        {ROWS_PER_PAGE.map((rowsToDisplay) => (
+          <option key={rowsToDisplay} value={rowsToDisplay}>
+            {rowsToDisplay}
           </option>
         ))}
       </Select>
@@ -61,7 +61,7 @@ export const TablePagination = <T extends object>(props: TablePaginationProps<T>
         <Button as="a" rel="next" onClick={() => nextPage()} disabled={!canNextPage}>
           Next
         </Button>
-        <Button as="a" rel="prev" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <Button as="a" rel="next" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           Last page
         </Button>
       </ButtonGroup>
