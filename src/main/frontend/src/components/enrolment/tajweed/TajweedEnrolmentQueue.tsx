@@ -1,10 +1,23 @@
 import React from "react"
-import { Tabs, Tab, TabList, TabPanels, TabPanel, Box, Heading } from "@chakra-ui/react"
+import {
+  Tabs,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Box,
+  Heading,
+  Center,
+  Spinner
+} from "@chakra-ui/react"
 import { Column } from "react-table"
-import { format, add } from "date-fns"
 import { Table } from "../../table/Table"
+import PaginatedList from "../../table/PaginatedList"
+import { useQuery } from "react-query"
+import { doFetch, FetchMethod, ServerError } from "../../../fetch"
+import EnrolmentStatus from "../../model/EnrolmentStatus"
 
-interface TajweedEnrolment {
+export interface TajweedEnrolment {
   name: string
   contactNo: string
   suburb: string
@@ -15,19 +28,19 @@ const TajweedEnrolmentQueue = () => {
   return (
     <React.Fragment>
       <Heading size="md" fontWeight="extrabold" mb="6">
-        Tajweed Enrolments
+        Tajweed Wait List
       </Heading>
       <Box flex="1" borderWidth="3px" rounded="xl">
         <Tabs isFitted>
           <TabList>
-            <Tab>New</Tab>
-            <Tab isDisabled>Pending</Tab>
-            <Tab isDisabled>Confirmed</Tab>
-            <Tab isDisabled>Finalized</Tab>
+            <Tab>New Submissions</Tab>
+            <Tab isDisabled>Pending Submissions</Tab>
+            <Tab isDisabled>Confirmed Submissions</Tab>
+            <Tab isDisabled>Finalized Submissions</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <EnrolmentList />
+              <EnrolmentList status={EnrolmentStatus.SUBMITTED} />
             </TabPanel>
             <TabPanel></TabPanel>
             <TabPanel></TabPanel>
@@ -39,45 +52,22 @@ const TajweedEnrolmentQueue = () => {
   )
 }
 
-const EnrolmentList = () => {
-  const data: TajweedEnrolment[] = [
-    {
-      name: "Mohammad Khan",
-      contactNo: "0406000000",
-      suburb: "NOBLE PARK",
-      submissionDate: format(new Date(), "dd/MM/yyyy")
-    },
-    {
-      name: "Hasnain Javed",
-      contactNo: "0406111111",
-      suburb: "NOBLE PARK",
-      submissionDate: format(new Date(), "dd/MM/yyyy")
-    },
-    {
-      name: "Rizwan Muzammil",
-      contactNo: "0406222222",
-      suburb: "DANDENONG",
-      submissionDate: format(add(new Date(), { days: 1 }), "dd/MM/yyyy")
-    },
-    {
-      name: "Muazzam Mushtaq",
-      contactNo: "0406333333",
-      suburb: "PAKENHAM",
-      submissionDate: format(add(new Date(), { days: 3 }), "dd/MM/yyyy")
-    },
-    {
-      name: "Mudaser Syed",
-      contactNo: "0406444444",
-      suburb: "KEYSBOROUGH",
-      submissionDate: format(add(new Date(), { days: 4 }), "dd/MM/yyyy")
-    },
-    {
-      name: "Ali Aziz",
-      contactNo: "0406555555",
-      suburb: "CLYDE",
-      submissionDate: format(add(new Date(), { days: 5 }), "dd/MM/yyyy")
-    }
-  ]
+interface EnrolmentListProps {
+  status: EnrolmentStatus
+}
+
+const EnrolmentList = ({ status }: EnrolmentListProps) => {
+  const [pageNumber, setPageNumber] = React.useState(0)
+  const [showPerPage, setShowPerPage] = React.useState(5)
+
+  const result = useQuery<PaginatedList<TajweedEnrolment>, ServerError>(
+    ["enrolments", "tajweed", status, pageNumber, showPerPage],
+    () =>
+      doFetch<PaginatedList<TajweedEnrolment>>(
+        `/api/enrolments/tajweed?page=${pageNumber}&size=${showPerPage}`,
+        FetchMethod.GET
+      )
+  )
 
   const columns: Column<TajweedEnrolment>[] = [
     { Header: "Name", accessor: "name" },
@@ -86,7 +76,32 @@ const EnrolmentList = () => {
     { Header: "Submission Date", accessor: "submissionDate" }
   ]
 
-  return <Table tableColumns={columns} tableRows={data} />
+  switch (result.status) {
+    case "loading":
+      return (
+        <Center height="60vh">
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        </Center>
+      )
+    case "success":
+      return (
+        <Table
+          tableColumns={columns}
+          /* or callback to fetch data ?*/
+          // tableRows={[]}
+          /* these would move down to table component if passed a callback to fecth data */
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          showPerPage={showPerPage}
+          setShowPerPage={setShowPerPage}
+          /* these would move down to table component if passed a callback to fecth data */
+          // totalPages={0 /*get from server response*/}
+          paged={result.data}
+        />
+      )
+    default:
+      return <div>Error</div>
+  }
 }
 
 export default TajweedEnrolmentQueue

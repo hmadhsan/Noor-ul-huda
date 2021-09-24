@@ -1,26 +1,39 @@
 import { Box } from "@chakra-ui/react"
-import { useMemo } from "react"
+import { useMemo, Dispatch, SetStateAction } from "react"
 import { TableActions } from "./TableActions"
 import { TableContent } from "./TableContent"
 import { TablePagination } from "./TablePagination"
 import { useTable, usePagination, useSortBy, useGlobalFilter, Column } from "react-table"
+import PaginatedList from "./PaginatedList"
 
 interface TableProps<T extends object> {
   tableColumns: Column<T>[]
-  tableRows: T[]
-  pageSize?: number
+  pageNumber: number
+  setPageNumber: Dispatch<SetStateAction<number>>
+  showPerPage?: number
+  setShowPerPage: Dispatch<SetStateAction<number>>
+  paged: PaginatedList<T>
 }
 
 export const Table = <T extends object>({
   tableColumns,
-  tableRows,
-  pageSize = 10
+  setPageNumber,
+  showPerPage = 10,
+  setShowPerPage,
+  pageNumber,
+  paged
 }: TableProps<T>) => {
   const columns = useMemo<Column<T>[]>(() => tableColumns, [tableColumns])
-  const data = useMemo<T[]>(() => tableRows, [tableRows])
+  const data = useMemo<T[]>(() => paged.items, [paged.items])
 
   const tableInstance = useTable<T>(
-    { columns, data, initialState: { pageSize } },
+    {
+      columns,
+      data,
+      initialState: { pageIndex: pageNumber, pageSize: showPerPage },
+      manualPagination: true,
+      pageCount: paged.totalPages
+    },
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -32,7 +45,13 @@ export const Table = <T extends object>({
         <Box overflowX="auto">
           <TableActions {...tableInstance} />
           <TableContent {...tableInstance} />
-          <TablePagination {...tableInstance} />
+          <TablePagination
+            {...tableInstance}
+            setPageNumber={setPageNumber}
+            showPerPage={showPerPage}
+            setShowPerPage={setShowPerPage}
+            paged={paged}
+          />
         </Box>
       </Box>
     </Box>
