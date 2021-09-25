@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import {
   Button,
   ButtonGroup,
@@ -9,30 +9,38 @@ import {
   useColorModeValue as mode
 } from "@chakra-ui/react"
 import { UsePaginationInstanceProps, UseTableInstanceProps } from "react-table"
-import PaginatedList from "./PaginatedList"
 
 interface TablePaginationProps<T extends object>
   extends Pick<UseTableInstanceProps<T>, "state">,
     UsePaginationInstanceProps<T> {
   setPageNumber: Dispatch<SetStateAction<number>>
-  showPerPage: number
-  setShowPerPage: (showPerPage: number) => void
-  paged: PaginatedList<T>
+  setShowPerPage: Dispatch<SetStateAction<number>>
 }
 
 const ROWS_PER_PAGE = [5, 10, 15]
 
 export const TablePagination = <T extends object>(props: TablePaginationProps<T>) => {
   const {
+    canPreviousPage,
+    canNextPage,
     pageOptions,
-    state: { pageIndex },
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
     setPageNumber,
-    showPerPage,
-    setShowPerPage,
-    paged
+    setShowPerPage
   } = props
 
-  const totalPages = paged.totalPages
+  useEffect(() => {
+    setPageNumber(pageIndex)
+  }, [setPageNumber, pageIndex])
+
+  useEffect(() => {
+    setShowPerPage(pageSize)
+  }, [setShowPerPage, pageSize])
 
   return (
     <HStack height="2.5rem">
@@ -47,9 +55,9 @@ export const TablePagination = <T extends object>(props: TablePaginationProps<T>
         size="sm"
         width="4rem"
         rounded="base"
-        value={showPerPage}
+        value={pageSize}
         onChange={(e) => {
-          setShowPerPage(Number(e.target.value))
+          setPageSize(Number(e.target.value))
         }}
       >
         {ROWS_PER_PAGE.map((rowsToDisplay) => (
@@ -59,28 +67,16 @@ export const TablePagination = <T extends object>(props: TablePaginationProps<T>
         ))}
       </Select>
       <ButtonGroup variant="outline" size="sm">
-        <Button rel="prev" onClick={() => setPageNumber(0)} disabled={paged.firstPage}>
+        <Button rel="prev" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           First page
         </Button>
-        <Button
-          rel="prev"
-          onClick={() => setPageNumber((oldPageNumber) => Math.max(oldPageNumber - 1, 0))}
-          disabled={paged.firstPage}
-        >
+        <Button rel="prev" onClick={() => previousPage()} disabled={!canPreviousPage}>
           Previous
         </Button>
-        <Button
-          rel="next"
-          onClick={() => setPageNumber((oldPageNumber) => oldPageNumber + 1)}
-          disabled={paged.lastPage}
-        >
+        <Button rel="next" onClick={() => nextPage()} disabled={!canNextPage}>
           Next
         </Button>
-        <Button
-          rel="next"
-          onClick={() => setPageNumber(Math.min(totalPages - 1, totalPages))}
-          disabled={paged.lastPage}
-        >
+        <Button rel="next" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           Last page
         </Button>
       </ButtonGroup>

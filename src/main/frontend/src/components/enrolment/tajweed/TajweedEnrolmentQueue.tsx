@@ -12,17 +12,9 @@ import {
 } from "@chakra-ui/react"
 import { Column } from "react-table"
 import { Table } from "../../table/Table"
-import PaginatedList from "../../table/PaginatedList"
-import { useQuery } from "react-query"
-import { doFetch, FetchMethod, ServerError } from "../../../fetch"
-import EnrolmentStatus from "../../model/EnrolmentStatus"
-
-export interface TajweedEnrolment {
-  name: string
-  contactNo: string
-  suburb: string
-  submissionDate: string
-}
+import { EnrolmentStatus } from "../../model/EnrolmentStatus"
+import { TajweedEnrolment } from "./TajweedEnrolment"
+import { useFetchTajweedEnrolments } from "./useFetchTajweedEnrolments"
 
 const TajweedEnrolmentQueue = () => {
   return (
@@ -60,14 +52,7 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
   const [pageNumber, setPageNumber] = React.useState(0)
   const [showPerPage, setShowPerPage] = React.useState(5)
 
-  const result = useQuery<PaginatedList<TajweedEnrolment>, ServerError>(
-    ["enrolments", "tajweed", status, pageNumber, showPerPage],
-    () =>
-      doFetch<PaginatedList<TajweedEnrolment>>(
-        `/api/enrolments/tajweed?page=${pageNumber}&size=${showPerPage}`,
-        FetchMethod.GET
-      )
-  )
+  const result = useFetchTajweedEnrolments(status, pageNumber, showPerPage)
 
   const columns: Column<TajweedEnrolment>[] = [
     { Header: "Name", accessor: "name" },
@@ -83,22 +68,20 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
       )
-    case "success":
+    case "success": {
+      const { items, totalPages } = result.data
       return (
         <Table
           tableColumns={columns}
-          /* or callback to fetch data ?*/
-          // tableRows={[]}
-          /* these would move down to table component if passed a callback to fecth data */
+          tableRows={items}
+          totalPages={totalPages}
           pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
           showPerPage={showPerPage}
+          setPageNumber={setPageNumber}
           setShowPerPage={setShowPerPage}
-          /* these would move down to table component if passed a callback to fecth data */
-          // totalPages={0 /*get from server response*/}
-          paged={result.data}
         />
       )
+    }
     default:
       return <div>Error</div>
   }

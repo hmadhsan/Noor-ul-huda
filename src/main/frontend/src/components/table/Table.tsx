@@ -4,27 +4,28 @@ import { TableActions } from "./TableActions"
 import { TableContent } from "./TableContent"
 import { TablePagination } from "./TablePagination"
 import { useTable, usePagination, useSortBy, useGlobalFilter, Column } from "react-table"
-import PaginatedList from "./PaginatedList"
 
 interface TableProps<T extends object> {
   tableColumns: Column<T>[]
-  pageNumber: number
-  setPageNumber: Dispatch<SetStateAction<number>>
+  tableRows: T[]
+  totalPages?: number
+  pageNumber?: number
   showPerPage?: number
+  setPageNumber: Dispatch<SetStateAction<number>>
   setShowPerPage: Dispatch<SetStateAction<number>>
-  paged: PaginatedList<T>
 }
 
 export const Table = <T extends object>({
   tableColumns,
-  setPageNumber,
+  tableRows,
+  totalPages = 0,
+  pageNumber = 0,
   showPerPage = 10,
-  setShowPerPage,
-  pageNumber,
-  paged
+  setPageNumber,
+  setShowPerPage
 }: TableProps<T>) => {
   const columns = useMemo<Column<T>[]>(() => tableColumns, [tableColumns])
-  const data = useMemo<T[]>(() => paged.items, [paged.items])
+  const data = useMemo<T[]>(() => tableRows, [tableRows])
 
   const tableInstance = useTable<T>(
     {
@@ -32,7 +33,7 @@ export const Table = <T extends object>({
       data,
       initialState: { pageIndex: pageNumber, pageSize: showPerPage },
       manualPagination: true,
-      pageCount: paged.totalPages
+      pageCount: totalPages
     },
     useGlobalFilter,
     useSortBy,
@@ -48,9 +49,7 @@ export const Table = <T extends object>({
           <TablePagination
             {...tableInstance}
             setPageNumber={setPageNumber}
-            showPerPage={showPerPage}
             setShowPerPage={setShowPerPage}
-            paged={paged}
           />
         </Box>
       </Box>

@@ -1,5 +1,3 @@
-enum EnrolmentStatus {
+export enum EnrolmentStatus {
   SUBMITTED = "SUBMITTED"
 }
-
-export default EnrolmentStatus

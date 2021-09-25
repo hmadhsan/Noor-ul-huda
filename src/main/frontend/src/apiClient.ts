@@ -58,9 +58,8 @@ async function handleResponse<T>(response: Response): Promise<T | ServerError> {
   }
 }
 
-function isError<T>(response: ServerError | T): response is ServerError {
-  return (response as ServerError).type !== undefined
-}
+const isServerError = (response: any): response is ServerError =>
+  response && (response as ServerError).type !== undefined
 
 export const doFetch = async <T>(
   url: string,
@@ -73,7 +72,7 @@ export const doFetch = async <T>(
     body: body ? JSON.stringify(body) : null
   }).then<T | ServerError>(handleResponse)
 
-  if (isError(response)) {
+  if (isServerError(response)) {
     throw response
   }
 
