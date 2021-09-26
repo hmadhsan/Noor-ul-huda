@@ -11,7 +11,7 @@ interface TestData {
 
 const TEST_COLUMNS: Column<TestData>[] = [
   { Header: "Name", accessor: "name" },
-  { Header: "Version", accessor: "version" }
+  { Header: "Version", accessor: "version", disableGlobalFilter: true }
 ]
 
 const TEST_ROWS: TestData[] = [
@@ -52,6 +52,40 @@ test("table should display rows", () => {
   )
   expect(screen.getByRole("row", { name: /java 11/i })).toBeInTheDocument()
   expect(screen.getByRole("row", { name: /typescript 4.x/i })).toBeInTheDocument()
+})
+
+describe("search filtering", () => {
+  test("should filter by name column", async () => {
+    render(
+      <Table
+        tableColumns={TEST_COLUMNS}
+        tableRows={TEST_ROWS}
+        setPageNumber={jest.fn()}
+        setShowPerPage={jest.fn()}
+      />
+    )
+
+    userEvent.type(screen.getByRole("searchbox"), "java")
+
+    expect(screen.getByRole("row", { name: /java 11/i })).toBeInTheDocument()
+    expect(screen.queryByRole("row", { name: /typescript 4.x/i })).not.toBeInTheDocument()
+  })
+
+  test("should not filter by version column", async () => {
+    render(
+      <Table
+        tableColumns={TEST_COLUMNS}
+        tableRows={TEST_ROWS}
+        setPageNumber={jest.fn()}
+        setShowPerPage={jest.fn()}
+      />
+    )
+
+    userEvent.type(screen.getByRole("searchbox"), "4.x")
+
+    expect(screen.queryByRole("row", { name: /java 11/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole("row", { name: /typescript 4.x/i })).not.toBeInTheDocument()
+  })
 })
 
 describe("pagination controls", () => {
