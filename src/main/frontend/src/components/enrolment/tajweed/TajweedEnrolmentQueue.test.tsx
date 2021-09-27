@@ -1,6 +1,6 @@
 import { setupServer } from "msw/node"
 import { rest } from "msw"
-import { screen, waitForElementToBeRemoved, within } from "@testing-library/react"
+import { screen, waitForElementToBeRemoved } from "@testing-library/react"
 import { renderWithClient } from "../../../test-utils"
 import { TajweedEnrolmentQueue } from "./TajweedEnrolmentQueue"
 import { TajweedEnrolment } from "./TajweedEnrolment"
@@ -84,92 +84,6 @@ test("should have new submissions tab selected by default", () => {
   expect(screen.getByRole("tab", { selected: false, name: /finalized/i })).toBeInTheDocument()
 })
 
-interface SortingTestParams {
-  column: string
-  rowCell1: string
-  rowCell2: string
-  cellIndex: number
-}
-
-test.each`
-  column          | rowCell1        | rowCell2        | cellIndex
-  ${"name"}       | ${"B"}          | ${"A"}          | ${0}
-  ${"contact no"} | ${"0406111112"} | ${"0406111111"} | ${1}
-  ${"suburb"}     | ${"D"}          | ${"C"}          | ${2}
-`(
-  "should sort by '$column' column ascending order",
-  async ({ column, rowCell1, rowCell2, cellIndex }: SortingTestParams) => {
-    giveSuccessfullResponse(NEW_TAJWEED_ENROLMENTS.slice(0, 2))
-
-    renderWithClient(new QueryClient(), <TajweedEnrolmentQueue />)
-
-    await waitForElementToBeRemoved(await screen.findByText(/loading/i))
-
-    const preSortedDataRows = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
-
-    const rowCell1Regex = new RegExp(rowCell1, "i")
-    const rowCell2Regex = new RegExp(rowCell2, "i")
-
-    expect(within(preSortedDataRows[0]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell1Regex
-    )
-    expect(within(preSortedDataRows[1]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell2Regex
-    )
-
-    userEvent.click(screen.getByText(new RegExp(column, "i")))
-
-    const sortedDataRows = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
-    expect(within(sortedDataRows[0]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell2Regex
-    )
-    expect(within(sortedDataRows[1]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell1Regex
-    )
-    expect(screen.getByTestId("sort-icon-asc")).toBeInTheDocument()
-  }
-)
-
-test.each`
-  column          | rowCell1        | rowCell2        | cellIndex
-  ${"name"}       | ${"B"}          | ${"A"}          | ${0}
-  ${"contact no"} | ${"0406111112"} | ${"0406111111"} | ${1}
-  ${"suburb"}     | ${"D"}          | ${"C"}          | ${2}
-`(
-  "should sort by '$column' column descending order",
-  async ({ column, rowCell1, rowCell2, cellIndex }: SortingTestParams) => {
-    giveSuccessfullResponse(NEW_TAJWEED_ENROLMENTS.slice(0, 2))
-
-    renderWithClient(new QueryClient(), <TajweedEnrolmentQueue />)
-
-    await waitForElementToBeRemoved(await screen.findByText(/loading/i))
-
-    const preSortedDataRows = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
-
-    const rowCell1Regex = new RegExp(rowCell1, "i")
-    const rowCell2Regex = new RegExp(rowCell2, "i")
-
-    expect(within(preSortedDataRows[0]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell1Regex
-    )
-    expect(within(preSortedDataRows[1]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell2Regex
-    )
-
-    userEvent.click(screen.getByText(new RegExp(column, "i")))
-    userEvent.click(screen.getByText(new RegExp(column, "i")))
-
-    const sortedDataRows = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
-    expect(within(sortedDataRows[0]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell1Regex
-    )
-    expect(within(sortedDataRows[1]).getAllByRole("cell")[cellIndex]).toHaveTextContent(
-      rowCell2Regex
-    )
-    expect(screen.getByTestId("sort-icon-desc")).toBeInTheDocument()
-  }
-)
-
 test("should not sort column by submission date", async () => {
   giveSuccessfullResponse(NEW_TAJWEED_ENROLMENTS.slice(0, 2))
 
@@ -220,7 +134,7 @@ const giveSuccessfullResponse = (response: TajweedEnrolment[]) => {
   }
 
   server.use(
-    rest.get("/api/enrolments/tajweed", async (req, res, ctx) => {
+    rest.get("/api/enrolment/tajweed", async (req, res, ctx) => {
       return res.once(ctx.status(200), ctx.json(paged))
     })
   )
@@ -232,7 +146,7 @@ const giveErrorResponse = () => {
   }
 
   server.use(
-    rest.get("/api/enrolments/tajweed", async (req, res, ctx) => {
+    rest.get("/api/enrolment/tajweed", async (req, res, ctx) => {
       return res.once(ctx.status(500), ctx.json(error))
     })
   )

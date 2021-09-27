@@ -5,7 +5,7 @@ import { TajweedEnrolment } from "../../../../components/enrolment/tajweed/Tajwe
 import { EnrolmentStatus } from "../../../../components/model/EnrolmentStatus"
 import { NEW_TAJWEED_ENROLMENTS } from "./data"
 export const tajweedEnrolmentHandlers = [
-  rest.get<Pageable<TajweedEnrolment>>("/api/enrolments/tajweed", (req, res, ctx) => {
+  rest.get<Pageable<TajweedEnrolment>>("/api/enrolment/tajweed", (req, res, ctx) => {
     const status = req.url.searchParams.get("status")!
     const pageNumber = Number(req.url.searchParams.get("page"))
     const pageSize = Number(req.url.searchParams.get("size"))

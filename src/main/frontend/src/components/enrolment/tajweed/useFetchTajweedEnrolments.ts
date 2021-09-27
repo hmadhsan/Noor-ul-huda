@@ -13,7 +13,7 @@ export const useFetchTajweedEnrolments = (
     ["enrolments", "tajweed", status, page, size],
     () =>
       doFetch<Pageable<TajweedEnrolment>>(
-        `/api/enrolments/tajweed?status=${status}&page=${page}&size=${size}`,
+        `/api/enrolment/tajweed?status=${status}&page=${page}&size=${size}`,
         FetchMethod.GET
       )
   )

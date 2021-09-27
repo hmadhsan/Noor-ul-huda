@@ -1,2 +1,18 @@
 server:
   port: 8081
+nha:
+  services:
+    enrolment:
+      contextPath: /enrolment-service
+      port: 9091
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: get_tajweed_enrolments_list
+          uri: ${nha.host.url}:${nha.services.enrolment.port}
+          predicates:
+            - Method=GET
+            - Path=/api/enrolment/tajweed
+          filters:
+            - PrefixPath=${nha.services.enrolment.contextPath}
