@@ -8,7 +8,11 @@ import {
   Box,
   Heading,
   Center,
-  Spinner
+  Spinner,
+  Tooltip,
+  Alert,
+  AlertIcon,
+  Container
 } from "@chakra-ui/react"
 import { Column } from "react-table"
 import { Table } from "../../table/Table"
@@ -16,7 +20,7 @@ import { EnrolmentStatus } from "../../model/EnrolmentStatus"
 import { TajweedEnrolment } from "./TajweedEnrolment"
 import { useFetchTajweedEnrolments } from "./useFetchTajweedEnrolments"
 
-const TajweedEnrolmentQueue = () => {
+export const TajweedEnrolmentQueue = () => {
   return (
     <React.Fragment>
       <Heading size="md" fontWeight="extrabold" mb="6">
@@ -25,10 +29,18 @@ const TajweedEnrolmentQueue = () => {
       <Box flex="1" borderWidth="3px" rounded="xl">
         <Tabs isFitted>
           <TabList>
-            <Tab>New Submissions</Tab>
-            <Tab isDisabled>Pending Submissions</Tab>
-            <Tab isDisabled>Confirmed Submissions</Tab>
-            <Tab isDisabled>Finalized Submissions</Tab>
+            <Tooltip label="New placement requests">
+              <Tab>New</Tab>
+            </Tooltip>
+            <Tooltip label="Enrolments waiting to be confirmed by the applicant">
+              <Tab isDisabled>Pending</Tab>
+            </Tooltip>
+            <Tooltip label="Enrolments confirmed by the applicant">
+              <Tab isDisabled>Confirmed</Tab>
+            </Tooltip>
+            <Tooltip label="Enrolments approved by admin">
+              <Tab isDisabled>Finalized</Tab>
+            </Tooltip>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -58,13 +70,13 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
     { Header: "Name", accessor: "name" },
     { Header: "Contact No", accessor: "contactNo" },
     { Header: "Suburb", accessor: "suburb" },
-    { Header: "Submission Date", accessor: "submissionDate" }
+    { Header: "Submission Date", accessor: "submissionDate", disableSortBy: true }
   ]
 
   switch (result.status) {
     case "loading":
       return (
-        <Center height="60vh">
+        <Center>
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         </Center>
       )
@@ -83,8 +95,15 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
       )
     }
     default:
-      return <div>Error</div>
+      return (
+        <Container centerContent>
+          <Center>
+            <Alert status="error" rounded="md">
+              <AlertIcon />
+              There was an error processing your request
+            </Alert>
+          </Center>
+        </Container>
+      )
   }
 }
-
-export default TajweedEnrolmentQueue

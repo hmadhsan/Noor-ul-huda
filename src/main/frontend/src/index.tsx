@@ -7,7 +7,13 @@ import { QueryClient, QueryClientProvider } from "react-query"
 import { ReactQueryDevtools } from "react-query/devtools"
 import "./mocks/browser"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retryDelay: 2000
+    }
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>

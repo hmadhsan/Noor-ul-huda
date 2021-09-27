@@ -33,9 +33,9 @@ export const TableContent = <T extends object>(props: TableContentProps<T>) => {
                   <Text>{column.render("Header")}</Text>
                   {column.isSorted ? (
                     column.isSortedDesc ? (
-                      <FaSortAmountDown />
+                      <FaSortAmountDown data-testid="sort-icon-desc" />
                     ) : (
-                      <FaSortAmountUp />
+                      <FaSortAmountUp data-testid="sort-icon-asc" />
                     )
                   ) : null}
                 </HStack>
