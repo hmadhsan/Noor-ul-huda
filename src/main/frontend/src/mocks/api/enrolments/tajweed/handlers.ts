@@ -30,6 +30,6 @@ export const tajweedEnrolmentHandlers = [
       lastPage: pageable.currentPage === pageable.totalPages
     }
 
-    return res(ctx.delay(500), ctx.status(500), ctx.json(paged))
+    return res(ctx.delay(500), ctx.status(200), ctx.json(paged))
   })
 ]
