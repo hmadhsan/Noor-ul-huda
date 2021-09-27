@@ -68,8 +68,8 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
 
   const columns: Column<TajweedEnrolment>[] = [
     { Header: "Name", accessor: "name" },
-    { Header: "Contact No", accessor: "contactNo" },
-    { Header: "Suburb", accessor: "suburb" },
+    { Header: "Contact No", accessor: "contactNumber" },
+    { Header: "Suburb", accessor: (row) => row.address.suburb },
     { Header: "Submission Date", accessor: "submissionDate", disableSortBy: true }
   ]
 

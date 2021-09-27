@@ -6,48 +6,78 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
   {
     id: "1",
     name: "Mohammad Khan",
-    contactNo: "0406000000",
-    suburb: "NOBLE PARK",
+    contactNumber: "0406000000",
+    address: {
+      street: "1 Test Street",
+      suburb: "NOBLE PARK",
+      postcode: "3174",
+      state: "VIC"
+    },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "2",
     name: "Hasnain Javed",
-    contactNo: "0406111111",
-    suburb: "NOBLE PARK",
+    contactNumber: "0406111111",
+    address: {
+      street: "2 Test Street",
+      suburb: "NOBLE PARK",
+      postcode: "3174",
+      state: "VIC"
+    },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "3",
     name: "Rizwan Muzammil",
-    contactNo: "0406222222",
-    suburb: "DANDENONG",
+    contactNumber: "0406222222",
+    address: {
+      street: "3 Test Street",
+      suburb: "DANDENONG",
+      postcode: "3175",
+      state: "VIC"
+    },
     submissionDate: format(add(new Date(), { days: 1 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "4",
     name: "Muazzam Mushtaq",
-    contactNo: "0406333333",
-    suburb: "PAKENHAM",
+    contactNumber: "0406333333",
+    address: {
+      street: "4 Test Street",
+      suburb: "PAKENHAM",
+      postcode: "3810",
+      state: "VIC"
+    },
     submissionDate: format(add(new Date(), { days: 3 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "5",
     name: "Mudaser Syed",
-    contactNo: "0406444444",
-    suburb: "KEYSBOROUGH",
+    contactNumber: "0406444444",
+    address: {
+      street: "5 Test Street",
+      suburb: "KEYSBOROUGH",
+      postcode: "3173",
+      state: "VIC"
+    },
     submissionDate: format(add(new Date(), { days: 4 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "6",
     name: "Ali Aziz",
-    contactNo: "0406555555",
-    suburb: "CLYDE",
+    contactNumber: "0406555555",
+    address: {
+      street: "5 Test Street",
+      suburb: "CLYDE",
+      postcode: "3978",
+      state: "VIC"
+    },
     submissionDate: format(add(new Date(), { days: 5 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
   }

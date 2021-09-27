@@ -14,16 +14,26 @@ const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
   {
     id: "1",
     name: "B",
-    contactNo: "0406111112",
-    suburb: "D",
+    contactNumber: "0406111112",
+    address: {
+      street: "1 Test Street",
+      suburb: "D",
+      postcode: "3174",
+      state: "VIC"
+    },
     submissionDate: "26/09/2021",
     status: EnrolmentStatus.SUBMITTED
   },
   {
     id: "2",
     name: "A",
-    contactNo: "0406111111",
-    suburb: "C",
+    contactNumber: "0406111111",
+    address: {
+      street: "1 Test Street",
+      suburb: "C",
+      postcode: "3174",
+      state: "VIC"
+    },
     submissionDate: "27/09/2021",
     status: EnrolmentStatus.SUBMITTED
   }
