@@ -3,7 +3,7 @@ import Dashboard from "./dashboard/Dashboard"
 import { useMobileMenuState } from "./navigation/mobile/useMobileMenuState"
 import { MobileMenuButton } from "./navigation/mobile/MobileMenuButton"
 import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react"
-import TajweedEnrolmentList from "./enrolment/TajweedEnrolmentList"
+import { TajweedEnrolmentQueue } from "./enrolment/tajweed/TajweedEnrolmentQueue"
 
 import { Route, Switch } from "react-router-dom"
 
@@ -45,7 +45,7 @@ export const App = () => {
                   <Dashboard />
                 </Route>
                 <Route exact path="/enrolments/tajweed">
-                  <TajweedEnrolmentList />
+                  <TajweedEnrolmentQueue />
                 </Route>
                 <Route path="*">
                   <h1 className="text-center">Four oh Four</h1>
