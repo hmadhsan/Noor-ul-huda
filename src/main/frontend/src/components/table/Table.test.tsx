@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import { render } from "../../test-utils"
 import { Column } from "react-table"
 import { Table } from "./Table"
@@ -36,9 +36,13 @@ test("table should display columns", () => {
       setShowPerPage={jest.fn()}
     />
   )
-  expect(screen.getAllByRole("columnheader")).toHaveLength(2)
-  expect(screen.getByText(/name/i)).toBeInTheDocument()
-  expect(screen.getByText(/version/i)).toBeInTheDocument()
+
+  const row = within(screen.getAllByRole("rowgroup")[0]).getAllByRole("row")
+  const columns = within(row[0]).getAllByRole("columnheader")
+
+  expect(columns).toHaveLength(2)
+  expect(columns[0]).toHaveTextContent(/name/i)
+  expect(columns[1]).toHaveTextContent(/version/i)
 })
 
 test("table should display rows", () => {
@@ -50,8 +54,20 @@ test("table should display rows", () => {
       setShowPerPage={jest.fn()}
     />
   )
-  expect(screen.getByRole("row", { name: /java 11/i })).toBeInTheDocument()
-  expect(screen.getByRole("row", { name: /typescript 4.x/i })).toBeInTheDocument()
+
+  const rows = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
+  expect(rows).toHaveLength(2)
+
+  const firstRowColumns = within(rows[0]).getAllByRole("cell")
+  const secondRowColumns = within(rows[1]).getAllByRole("cell")
+
+  expect(firstRowColumns).toHaveLength(2)
+  expect(firstRowColumns[0]).toHaveTextContent(/java/i)
+  expect(firstRowColumns[1]).toHaveTextContent("11")
+
+  expect(secondRowColumns).toHaveLength(2)
+  expect(secondRowColumns[0]).toHaveTextContent(/typescript/i)
+  expect(secondRowColumns[1]).toHaveTextContent("4.x")
 })
 
 describe("search filtering", () => {

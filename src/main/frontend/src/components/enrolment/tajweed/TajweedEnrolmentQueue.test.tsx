@@ -1,6 +1,6 @@
 import { setupServer } from "msw/node"
 import { rest } from "msw"
-import { screen, waitForElementToBeRemoved } from "@testing-library/react"
+import { screen, waitForElementToBeRemoved, within } from "@testing-library/react"
 import { renderWithClient } from "../../../test-utils"
 import { TajweedEnrolmentQueue } from "./TajweedEnrolmentQueue"
 import { TajweedEnrolment } from "./TajweedEnrolment"
@@ -92,6 +92,40 @@ test("should have new submissions tab selected by default", () => {
   expect(screen.getByRole("tab", { selected: false, name: /pending/i })).toBeInTheDocument()
   expect(screen.getByRole("tab", { selected: false, name: /confirmed/i })).toBeInTheDocument()
   expect(screen.getByRole("tab", { selected: false, name: /finalized/i })).toBeInTheDocument()
+})
+
+test("table should display columns", async () => {
+  giveSuccessfullResponse([])
+
+  renderWithClient(new QueryClient(), <TajweedEnrolmentQueue />)
+
+  await waitForElementToBeRemoved(await screen.findByText(/loading/i))
+
+  const row = within(screen.getAllByRole("rowgroup")[0]).getAllByRole("row")
+  const columns = within(row[0]).getAllByRole("columnheader")
+
+  expect(columns).toHaveLength(4)
+  expect(columns[0]).toHaveTextContent(/name/i)
+  expect(columns[1]).toHaveTextContent(/contact no/i)
+  expect(columns[2]).toHaveTextContent(/suburb/i)
+  expect(columns[3]).toHaveTextContent(/submission date/i)
+})
+
+test("table should display row", async () => {
+  giveSuccessfullResponse(NEW_TAJWEED_ENROLMENTS.slice(0, 1))
+
+  renderWithClient(new QueryClient(), <TajweedEnrolmentQueue />)
+
+  await waitForElementToBeRemoved(await screen.findByText(/loading/i))
+
+  const row = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
+  const columns = within(row[0]).getAllByRole("cell")
+
+  expect(columns).toHaveLength(4)
+  expect(columns[0]).toHaveTextContent("B")
+  expect(columns[1]).toHaveTextContent("0406111112")
+  expect(columns[2]).toHaveTextContent("D")
+  expect(columns[3]).toHaveTextContent("26/09/2021")
 })
 
 test("should not sort column by submission date", async () => {
