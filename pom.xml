@@ -23,7 +23,7 @@
 		<frontend-maven-plugin.nodeVersion>v14.17.1</frontend-maven-plugin.nodeVersion>
 		<frontend-maven-plugin.npmVersion>6.14.13</frontend-maven-plugin.npmVersion>
 
-		<jsoup.version>1.14.2</jsoup.version>
+		<jsoup.version>1.14.3</jsoup.version>
 	</properties>
 	<dependencies>
 		<dependency>
