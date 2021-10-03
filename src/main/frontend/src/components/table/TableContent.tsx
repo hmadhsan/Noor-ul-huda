@@ -1,5 +1,6 @@
 import {
-  Button,
+  HStack,
+  Text,
   Table,
   Tbody,
   Td,
@@ -8,41 +9,56 @@ import {
   Tr,
   useColorModeValue as mode
 } from "@chakra-ui/react"
-import * as React from "react"
-import { columns, data } from "./_data"
+import { Row, UseTableInstanceProps, UsePaginationInstanceProps } from "react-table"
+import { FaSortAmountUp, FaSortAmountDown } from "react-icons/fa"
 
-export const TableContent = () => {
+type TableContentProps<T extends object> = UseTableInstanceProps<T> & UsePaginationInstanceProps<T>
+
+export const TableContent = <T extends object>(props: TableContentProps<T>) => {
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = props
+
   return (
-    <Table my="8" borderWidth="1px" fontSize="sm">
+    <Table my="7" borderWidth="1px" fontSize="md" {...getTableProps()} size="lg" variant="striped">
       <Thead bg={mode("gray.50", "gray.800")}>
-        <Tr>
-          {columns.map((column, index) => (
-            <Th whiteSpace="nowrap" scope="col" key={index}>
-              {column.Header}
-            </Th>
-          ))}
-          <Th />
-        </Tr>
-      </Thead>
-      <Tbody>
-        {data.map((row, index) => (
-          <Tr key={index}>
-            {columns.map((column, index) => {
-              const cell = row[column.accessor as keyof typeof row]
-              const element = column.Cell?.(cell) ?? cell
-              return (
-                <Td whiteSpace="nowrap" key={index}>
-                  {element}
-                </Td>
-              )
-            })}
-            <Td textAlign="right">
-              <Button variant="link" colorScheme="blue">
-                View
-              </Button>
-            </Td>
+        {headerGroups.map((headerGroup) => (
+          <Tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <Th
+                whiteSpace="nowrap"
+                scope="col"
+                {...column.getHeaderProps(column.getSortByToggleProps())}
+                textAlign="center"
+              >
+                <HStack justify="center">
+                  <Text>{column.render("Header")}</Text>
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <FaSortAmountDown data-testid="sort-icon-desc" />
+                    ) : (
+                      <FaSortAmountUp data-testid="sort-icon-asc" />
+                    )
+                  ) : null}
+                </HStack>
+              </Th>
+            ))}
           </Tr>
         ))}
+      </Thead>
+      <Tbody {...getTableBodyProps()}>
+        {page.map((row: Row<T>) => {
+          prepareRow(row)
+          return (
+            <Tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                return (
+                  <Td whiteSpace="nowrap" {...cell.getCellProps()} textAlign="center">
+                    {cell.render("Cell")}
+                  </Td>
+                )
+              })}
+            </Tr>
+          )
+        })}
       </Tbody>
     </Table>
   )

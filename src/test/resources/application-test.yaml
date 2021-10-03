@@ -1,3 +1,6 @@
+nha:
+  host:
+      url: http://localhost
 spring:
   codec:
-    max-in-memory-size: 500KB
+    max-in-memory-size: 1MB
