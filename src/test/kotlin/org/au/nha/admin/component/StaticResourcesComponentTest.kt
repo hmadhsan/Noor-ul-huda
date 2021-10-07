@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.expectBody
 Have to consume body explicitly when using the exchange method
 to avoid reactor.netty.http.client.PrematureCloseException: Connection prematurely closed DURING response
 
-exchange method has been deprecated in WebClient. Update WebTestClient if resolved in been new versions
+exchange method has been deprecated in WebClient. Update WebTestClient if resolved in new versions
  **/
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
