@@ -38,7 +38,7 @@ jobs:
           echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
       - name: Build Backend
         run: |
-          mvn -Pci -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
+          mvn -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |

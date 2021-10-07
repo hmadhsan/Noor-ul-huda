@@ -35,4 +35,4 @@ jobs:
       - name: Verify Backend
         if: ${{ env.VERIFY_BACKEND == 'true' }}
         run: |
-          mvn -Pci --file pom.xml clean verify
+          mvn --file pom.xml clean verify
