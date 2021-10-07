@@ -1,11 +1,13 @@
-import { screen } from "@testing-library/react"
+import { screen, RenderOptions } from "@testing-library/react"
 import { render } from "../test-utils"
 import { App } from "./App"
+import { BrowserRouter as Router } from "react-router-dom"
 
-test.skip("renders learn react link", () => {
-  render(<App />)
-  const linkElement = screen.getByText(/learn chakra/i)
-  expect(linkElement).toBeInTheDocument()
+const renderOptions: RenderOptions = { wrapper: Router }
+
+test.skip("renders dashboard as default view", () => {
+  render(<App />, renderOptions)
+  expect(screen.getByText(/dashboard/i)).toBeInTheDocument()
 })
 
 describe("mobile navigation", () => {

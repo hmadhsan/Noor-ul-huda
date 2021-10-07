@@ -1,5 +1,5 @@
 import { Box, Stack } from "@chakra-ui/react"
-import { AccountSwitcher } from "./UserAccount"
+import { UserAccount } from "./UserAccount"
 import { ScrollArea } from "./ScrollArea"
 import { NavSectionTitle } from "./NavSectionTitle"
 import { SidebarLink } from "./SidebarLink"
@@ -34,7 +34,7 @@ const NavBar = () => {
           px="4"
           py="4"
         >
-          <AccountSwitcher />
+          <UserAccount />
         </Box>
         <ScrollArea pt="5" pb="6">
           <Stack pb="6">
