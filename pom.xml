@@ -17,12 +17,6 @@
 		<java.version>11</java.version>
 		<kotlin.version>1.5.31</kotlin.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
-
-		<github-packages-repo-id>github</github-packages-repo-id>
-		<github-packages-repo-url>
-			https://maven.pkg.github.com/Nurul-Huda-Academy/nha-microservice-api-contracts
-		</github-packages-repo-url>
-
 		<jsoup.version>1.14.3</jsoup.version>
 	</properties>
 	<dependencies>

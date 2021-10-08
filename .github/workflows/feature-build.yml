@@ -9,13 +9,20 @@ env:
   DEPLOYMENT_SCRIPT: 'deployment.sh'
   APPLICATION_NAME: 'nha-admin-application'
   FRONTEND_WORK_DIR: "${{ github.workspace }}/src/main/frontend"
+  MAVEN_SETTINGS_FILE: "${{ github.workspace }}/nha_automation/github/maven/settings.xml"
 jobs:
   build_deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout NHA Admin Application
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
+      - name: Checkout NHA Automation
+        uses: actions/checkout@v2.3.4
+        with:
+          repository: Nurul-Huda-Academy/nha-automation
+          token: ${{ secrets.CHECKOUT_ACTION_PAT }}
+          path: nha_automation
       - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v2.4.1
         with:
@@ -31,14 +38,16 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
-          cache: maven
+          cache: 'maven'
       - name: Generate Version
         id: version
         run: |
           echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
       - name: Build Backend
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_GITHUB_PACKAGES_PAT }}
         run: |
-          mvn -Drevision=${{ steps.version.outputs.VERSION }} --file pom.xml clean verify
+          mvn -Drevision=${{ steps.version.outputs.VERSION }} --settings ${{ env.MAVEN_SETTINGS_FILE }} --file pom.xml clean verify
       - name: Create Image Tag
         id: tag
         run: |

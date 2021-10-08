@@ -1,6 +1,9 @@
 nha:
   host:
-      url: http://localhost
+      url: http://127.0.0.1
+stubrunner:
+  server-id: github
+  repositoryRoot: https://maven.pkg.github.com/Nurul-Huda-Academy/nha-microservice-api-contracts
 spring:
   codec:
     max-in-memory-size: 1MB
