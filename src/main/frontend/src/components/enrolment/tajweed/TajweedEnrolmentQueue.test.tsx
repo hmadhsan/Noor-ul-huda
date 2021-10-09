@@ -15,6 +15,10 @@ const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
     id: "1",
     name: "B",
     contactNumber: "0406111112",
+    email: "b@test.com",
+    occupation: "ABC",
+    enrolmentReason: "Reason 1",
+    applicantSignature: "B",
     address: {
       street: "1 Test Street",
       suburb: "D",
@@ -28,6 +32,10 @@ const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
     id: "2",
     name: "A",
     contactNumber: "0406111111",
+    email: "a@test.com",
+    occupation: "DEF",
+    enrolmentReason: "Reason 2",
+    applicantSignature: "A",
     address: {
       street: "1 Test Street",
       suburb: "C",

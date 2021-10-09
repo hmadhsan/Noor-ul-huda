@@ -1,16 +1,13 @@
 import {
-  FormErrorMessage,
   Box,
   Button,
   FormControl,
-  FormHelperText,
   FormLabel,
   Heading,
   HStack,
   Input,
   Stack,
   StackDivider,
-  Text,
   VStack,
   useDisclosure,
   Modal,
@@ -18,26 +15,25 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Link
+  ModalFooter
 } from "@chakra-ui/react"
-import { Address } from "../../../model/Address"
-import { EnrolmentStatus } from "../../../model/EnrolmentStatus"
+// import { Address } from "../../../model/Address"
+// import { EnrolmentStatus } from "../../../model/EnrolmentStatus"
 import { TajweedEnrolment } from "../TajweedEnrolment"
 import { TajweedLevelSelect } from "./TajweedLevelSelect"
 import { FieldGroup } from "./FieldGroup"
 import { StateSelect } from "./StateSelect"
 import React from "react"
 
-interface TajweedForm {
-  name: string
-  contactNumber: string
-  email: string
-  occupation: string
-  level: string
-  address: Address
-  status: EnrolmentStatus
-}
+// interface TajweedForm {
+//   name: string
+//   contactNumber: string
+//   email: string
+//   occupation: string
+//   level: string
+//   address: Address
+//   status: EnrolmentStatus
+// }
 
 interface TajweedFormModalProps {
   enrolment: TajweedEnrolment
