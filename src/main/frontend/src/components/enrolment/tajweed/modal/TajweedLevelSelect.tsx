@@ -1,5 +1,4 @@
-import { FormControl, FormLabel, Select, SelectProps } from "@chakra-ui/react"
-import * as React from "react"
+import { FormControl, Select, SelectProps } from "@chakra-ui/react"
 
 export const TajweedLevelSelect = (props: SelectProps) => (
   <FormControl id="level">

@@ -1,5 +1,4 @@
 import { FormControl, FormLabel, Select, SelectProps } from "@chakra-ui/react"
-import * as React from "react"
 
 export const StateSelect = (props: SelectProps) => (
   <FormControl id="state">
