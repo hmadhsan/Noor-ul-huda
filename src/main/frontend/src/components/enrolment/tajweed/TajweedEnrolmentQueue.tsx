@@ -14,11 +14,12 @@ import {
   AlertIcon,
   Container
 } from "@chakra-ui/react"
-import { Column } from "react-table"
+import { CellProps, Column } from "react-table"
 import { Table } from "../../table/Table"
 import { EnrolmentStatus } from "../../model/EnrolmentStatus"
 import { TajweedEnrolment } from "./TajweedEnrolment"
 import { useFetchTajweedEnrolments } from "./useFetchTajweedEnrolments"
+import { TajweedFormModal } from "./modal/TajweedFormModal"
 
 export const TajweedEnrolmentQueue = () => {
   return (
@@ -70,7 +71,13 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
     { Header: "Name", accessor: "name" },
     { Header: "Contact No", accessor: "contactNumber" },
     { Header: "Suburb", accessor: (row) => row.address.suburb },
-    { Header: "Submission Date", accessor: "submissionDate", disableSortBy: true }
+    { Header: "Submission Date", accessor: "submissionDate", disableSortBy: true },
+    {
+      Header: "Action",
+      disableSortBy: true,
+      disableGlobalFilter: true,
+      Cell: ({ row }: CellProps<TajweedEnrolment>) => <TajweedFormModal enrolment={row.original} />
+    }
   ]
 
   switch (result.status) {
