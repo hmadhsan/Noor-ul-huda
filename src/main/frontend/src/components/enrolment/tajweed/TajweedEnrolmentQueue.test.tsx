@@ -104,11 +104,12 @@ test("table should display columns", async () => {
   const row = within(screen.getAllByRole("rowgroup")[0]).getAllByRole("row")
   const columns = within(row[0]).getAllByRole("columnheader")
 
-  expect(columns).toHaveLength(4)
+  expect(columns).toHaveLength(5)
   expect(columns[0]).toHaveTextContent(/name/i)
   expect(columns[1]).toHaveTextContent(/contact no/i)
   expect(columns[2]).toHaveTextContent(/suburb/i)
   expect(columns[3]).toHaveTextContent(/submission date/i)
+  expect(columns[4]).toHaveTextContent(/action/i)
 })
 
 test("table should display row", async () => {
@@ -121,11 +122,12 @@ test("table should display row", async () => {
   const row = within(screen.getAllByRole("rowgroup")[1]).getAllByRole("row")
   const columns = within(row[0]).getAllByRole("cell")
 
-  expect(columns).toHaveLength(4)
+  expect(columns).toHaveLength(5)
   expect(columns[0]).toHaveTextContent("B")
   expect(columns[1]).toHaveTextContent("0406111112")
   expect(columns[2]).toHaveTextContent("D")
   expect(columns[3]).toHaveTextContent("26/09/2021")
+  expect(columns[4]).toHaveTextContent(/view/i)
 })
 
 test("should not sort column by submission date", async () => {
