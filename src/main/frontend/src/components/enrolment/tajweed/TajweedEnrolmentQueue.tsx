@@ -40,7 +40,7 @@ export const TajweedEnrolmentQueue = () => {
               <Tab isDisabled>Confirmed</Tab>
             </Tooltip>
             <Tooltip label="Enrolments approved by admin">
-              <Tab isDisabled>Finalized</Tab>
+              <Tab isDisabled>Enroled</Tab>
             </Tooltip>
           </TabList>
           <TabPanels>

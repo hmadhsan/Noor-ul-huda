@@ -63,7 +63,7 @@ test("should display tabs", () => {
   expect(screen.getByRole("tab", { name: /new/i })).toBeInTheDocument()
   expect(screen.getByRole("tab", { name: /pending/i })).toBeInTheDocument()
   expect(screen.getByRole("tab", { name: /confirmed/i })).toBeInTheDocument()
-  expect(screen.getByRole("tab", { name: /finalized/i })).toBeInTheDocument()
+  expect(screen.getByRole("tab", { name: /enroled/i })).toBeInTheDocument()
 })
 
 test.each`
@@ -99,7 +99,7 @@ test("should have new submissions tab selected by default", () => {
   expect(screen.getByRole("tab", { selected: true })).toHaveTextContent(/new/i)
   expect(screen.getByRole("tab", { selected: false, name: /pending/i })).toBeInTheDocument()
   expect(screen.getByRole("tab", { selected: false, name: /confirmed/i })).toBeInTheDocument()
-  expect(screen.getByRole("tab", { selected: false, name: /finalized/i })).toBeInTheDocument()
+  expect(screen.getByRole("tab", { selected: false, name: /enroled/i })).toBeInTheDocument()
 })
 
 test("table should display columns", async () => {
