@@ -138,19 +138,6 @@ test("table should display row", async () => {
   expect(columns[4]).toHaveTextContent(/view/i)
 })
 
-test("should not sort column by submission date", async () => {
-  giveSuccessfullResponse(NEW_TAJWEED_ENROLMENTS.slice(0, 2))
-
-  renderWithClient(new QueryClient(), <TajweedEnrolmentQueue />)
-
-  await waitForElementToBeRemoved(await screen.findByText(/loading/i))
-
-  userEvent.click(screen.getByText(/submission date/i))
-
-  expect(screen.queryByTestId("sort-icon-asc")).not.toBeInTheDocument()
-  expect(screen.queryByTestId("sort-icon-desc")).not.toBeInTheDocument()
-})
-
 test("should display error message", async () => {
   setLogger({
     log: console.log,

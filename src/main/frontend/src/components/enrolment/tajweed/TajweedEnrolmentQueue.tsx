@@ -68,9 +68,9 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
   const result = useFetchTajweedEnrolments(status, pageNumber, showPerPage)
 
   const columns: Column<TajweedEnrolment>[] = [
-    { Header: "Name", accessor: "name" },
-    { Header: "Contact No", accessor: "contactNumber" },
-    { Header: "Suburb", accessor: (row) => row.address.suburb },
+    { Header: "Name", accessor: "name", disableSortBy: true },
+    { Header: "Contact No", accessor: "contactNumber", disableSortBy: true },
+    { Header: "Suburb", accessor: (row) => row.address.suburb, disableSortBy: true },
     { Header: "Submission Date", accessor: "submissionDate", disableSortBy: true },
     {
       Header: "Action",
