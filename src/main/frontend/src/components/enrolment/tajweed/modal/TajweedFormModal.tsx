@@ -15,12 +15,12 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  Textarea
 } from "@chakra-ui/react"
 // import { Address } from "../../../model/Address"
 // import { EnrolmentStatus } from "../../../model/EnrolmentStatus"
 import { TajweedEnrolment } from "../TajweedEnrolment"
-import { TajweedLevelSelect } from "./TajweedLevelSelect"
 import { FieldGroup } from "./FieldGroup"
 import { StateSelect } from "./StateSelect"
 import React from "react"
@@ -100,7 +100,7 @@ export const TajweedFormModal = ({ enrolment }: TajweedFormModalProps) => {
                         <Input type="text" maxLength={255} value={enrolment.address.suburb} />
                       </FormControl>
 
-                      <StateSelect />
+                      <StateSelect selectedValue={enrolment.address.state} />
 
                       <FormControl id="postcode">
                         <FormLabel>Postcode</FormLabel>
@@ -109,7 +109,12 @@ export const TajweedFormModal = ({ enrolment }: TajweedFormModalProps) => {
                     </VStack>
                   </FieldGroup>
                   <FieldGroup title="Tajweed Level">
-                    <TajweedLevelSelect />
+                    <Textarea
+                      rows={5}
+                      resize="none"
+                      maxLength={255}
+                      placeholder="Maximum 255 characters allowed"
+                    />
                   </FieldGroup>
                 </Stack>
                 <FieldGroup mt="8">

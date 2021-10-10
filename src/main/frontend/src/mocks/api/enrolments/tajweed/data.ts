@@ -15,7 +15,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "1 Test Street",
       suburb: "NOBLE PARK",
       postcode: "3174",
-      state: "VIC"
+      state: "Victoria"
     },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
@@ -32,7 +32,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "2 Test Street",
       suburb: "NOBLE PARK",
       postcode: "3174",
-      state: "VIC"
+      state: "Victoria"
     },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
@@ -49,7 +49,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "3 Test Street",
       suburb: "DANDENONG",
       postcode: "3175",
-      state: "VIC"
+      state: "New South Wales"
     },
     submissionDate: format(add(new Date(), { days: 1 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
@@ -66,7 +66,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "4 Test Street",
       suburb: "PAKENHAM",
       postcode: "3810",
-      state: "VIC"
+      state: "Western Australia"
     },
     submissionDate: format(add(new Date(), { days: 3 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
@@ -83,7 +83,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "5 Test Street",
       suburb: "KEYSBOROUGH",
       postcode: "3173",
-      state: "VIC"
+      state: "Queensland"
     },
     submissionDate: format(add(new Date(), { days: 4 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
@@ -100,7 +100,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       street: "5 Test Street",
       suburb: "CLYDE",
       postcode: "3978",
-      state: "VIC"
+      state: "Northern Territory"
     },
     submissionDate: format(add(new Date(), { days: 5 }), "dd/MM/yyyy"),
     status: EnrolmentStatus.SUBMITTED
