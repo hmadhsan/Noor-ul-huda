@@ -3,7 +3,7 @@ import data from "./data.json"
 import { StatCard } from "./StatCard"
 import React from "react"
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <React.Fragment>
       <Heading size="md" fontWeight="extrabold" mb="6">
@@ -21,5 +21,3 @@ const Dashboard = () => {
     </React.Fragment>
   )
 }
-
-export default Dashboard
