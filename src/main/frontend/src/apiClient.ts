@@ -15,9 +15,11 @@ export interface ServerError {
   violations?: Violation[]
 }
 
+export type NoContent = {}
+
 const GENERIC_ERROR: ServerError = {
   type: ErrorType.ERROR,
-  message: "Sorry, something went wrong. Try again later"
+  message: "There was an error processing your request"
 }
 
 const NOT_FOUND_ERROR: ServerError = {
@@ -26,7 +28,9 @@ const NOT_FOUND_ERROR: ServerError = {
 
 export enum FetchMethod {
   POST = "POST",
-  GET = "GET"
+  PUT = "PUT",
+  GET = "GET",
+  DELETE = "DELETE"
 }
 
 type ValidationError = Pick<ServerError, "message" | "violations">
@@ -37,7 +41,9 @@ async function handleResponse<T>(response: Response): Promise<T | ServerError> {
   }
 
   if (response.ok) {
-    return Promise.resolve<T>((await response.json()) as T)
+    return response.status === 204
+      ? Promise.resolve<T>({} as T)
+      : Promise.resolve<T>((await response.json()) as T)
   }
 
   switch (response.status) {
