@@ -10,9 +10,6 @@ const AllProviders = ({ children }: { children?: React.ReactNode }) => (
 const customRender = (ui: React.ReactElement, options?: RenderOptions) =>
   render(ui, { wrapper: AllProviders, ...options })
 
-const renderWithClient = (client: QueryClient, ui: React.ReactElement, options?: RenderOptions) =>
-  customRender(<QueryClientProvider client={client}>{ui}</QueryClientProvider>, options)
-
 const renderWithQueryClient = (
   ui: React.ReactElement,
   config?: DefaultOptions,
@@ -31,4 +28,4 @@ const renderWithQueryClient = (
     options
   )
 
-export { customRender as render, renderWithClient, renderWithQueryClient }
+export { customRender as render, renderWithQueryClient }
