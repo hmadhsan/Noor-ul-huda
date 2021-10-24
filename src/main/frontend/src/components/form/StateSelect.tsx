@@ -3,24 +3,19 @@ import { UseFormRegisterReturn } from "react-hook-form"
 import { STATES } from "../ui-utils"
 
 interface StateSelectProps extends SelectProps {
-  dataTestId?: string
+  dataTestId: string
   selectedState?: string
-  registerFormField?: () => UseFormRegisterReturn
+  registerFormField?: UseFormRegisterReturn
   children?: never
 }
 
 export const StateSelect = (props: StateSelectProps) => {
-  const {
-    dataTestId = "state",
-    selectedState: defaultState,
-    registerFormField,
-    ...selectProps
-  } = props
+  const { dataTestId, selectedState: defaultState, registerFormField, ...selectProps } = props
 
   return (
     <Select
       {...selectProps}
-      {...registerFormField?.()}
+      {...registerFormField}
       defaultValue={defaultState}
       data-testid={dataTestId}
     >

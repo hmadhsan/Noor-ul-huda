@@ -1,3 +1,4 @@
 export enum EnrolmentStatus {
-  SUBMITTED = "SUBMITTED"
+  SUBMITTED = "SUBMITTED",
+  APPROVE = "APPROVE"
 }
