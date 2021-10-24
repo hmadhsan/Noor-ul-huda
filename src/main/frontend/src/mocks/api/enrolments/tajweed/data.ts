@@ -18,6 +18,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "Victoria"
     },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   },
   {
@@ -35,6 +36,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "Victoria"
     },
     submissionDate: format(new Date(), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   },
   {
@@ -52,6 +54,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "New South Wales"
     },
     submissionDate: format(add(new Date(), { days: 1 }), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   },
   {
@@ -69,6 +72,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "Western Australia"
     },
     submissionDate: format(add(new Date(), { days: 3 }), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   },
   {
@@ -86,6 +90,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "Queensland"
     },
     submissionDate: format(add(new Date(), { days: 4 }), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   },
   {
@@ -103,6 +108,7 @@ export const NEW_TAJWEED_ENROLMENTS: TajweedEnrolment[] = [
       state: "Northern Territory"
     },
     submissionDate: format(add(new Date(), { days: 5 }), "dd/MM/yyyy"),
+    marketingMethod: "Friends and Families",
     status: EnrolmentStatus.SUBMITTED
   }
 ]

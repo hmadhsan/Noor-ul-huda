@@ -11,5 +11,6 @@ export interface TajweedEnrolment {
   applicantSignature: string
   address: Address
   submissionDate: string
+  marketingMethod: string
   status: EnrolmentStatus
 }

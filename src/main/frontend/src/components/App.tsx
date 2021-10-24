@@ -1,9 +1,9 @@
 import NavBar from "./navigation/NavBar"
-import Dashboard from "./dashboard/Dashboard"
+import { Dashboard } from "./dashboard/Dashboard"
 import { useMobileMenuState } from "./navigation/mobile/useMobileMenuState"
 import { MobileMenuButton } from "./navigation/mobile/MobileMenuButton"
 import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react"
-import { TajweedEnrolmentQueue } from "./enrolment/tajweed/TajweedEnrolmentQueue"
+import { TajweedEnrolmentQueue } from "./enrolment/tajweed/queue/TajweedEnrolmentQueue"
 
 import { Route, Switch } from "react-router-dom"
 

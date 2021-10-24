@@ -15,11 +15,11 @@ import {
   Container
 } from "@chakra-ui/react"
 import { CellProps, Column } from "react-table"
-import { Table } from "../../table/Table"
-import { EnrolmentStatus } from "../../model/EnrolmentStatus"
-import { TajweedEnrolment } from "./TajweedEnrolment"
+import { Table } from "../../../table/Table"
+import { EnrolmentStatus } from "../../../model/EnrolmentStatus"
 import { useFetchTajweedEnrolments } from "./useFetchTajweedEnrolments"
-import { TajweedFormModal } from "./modal/TajweedFormModal"
+import { ApproveTajweedFormModal } from "../approve/ApproveTajweedFormModal"
+import { TajweedEnrolment } from "../TajweedEnrolment"
 
 export const TajweedEnrolmentQueue = () => {
   return (
@@ -76,7 +76,9 @@ const EnrolmentList = ({ status }: EnrolmentListProps) => {
       Header: "Action",
       disableSortBy: true,
       disableGlobalFilter: true,
-      Cell: ({ row }: CellProps<TajweedEnrolment>) => <TajweedFormModal enrolment={row.original} />
+      Cell: ({ row }: CellProps<TajweedEnrolment>) => (
+        <ApproveTajweedFormModal enrolment={row.original} />
+      )
     }
   ]
 
