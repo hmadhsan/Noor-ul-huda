@@ -39,7 +39,7 @@ export const UserAccountButton = (props: FlexProps) => {
           </Box>
         </Box>
       </HStack>
-      <Box fontSize="lg" color="gray.400">
+      <Box fontSize="xs" color="gray.400">
         <HiSelector />
       </Box>
     </Flex>
