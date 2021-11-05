@@ -18,7 +18,7 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/react-table": "^7.7.7",
     "date-fns": "^2.23.0",
-    "framer-motion": "^4.1.17",
+    "framer-motion": "^5.2.1",
     "jw-paginate": "^1.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
