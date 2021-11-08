@@ -10,7 +10,10 @@ export const UserAccount = () => {
           user@nha.org.au
         </Text>
         <MenuDivider />
-        <MenuItem rounded="md">Settings</MenuItem>
+        <MenuItem rounded="md">
+          {" "}
+          <Text fontSize="xs">Settings</Text>
+        </MenuItem>
         <MenuDivider />
         <MenuItem rounded="md">Logout</MenuItem>
       </MenuList>

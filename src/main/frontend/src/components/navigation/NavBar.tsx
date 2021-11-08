@@ -6,7 +6,7 @@ import { SidebarLink } from "./SidebarLink"
 import { BiUserCircle } from "react-icons/bi"
 import { FaSchool, FaFileInvoiceDollar } from "react-icons/fa"
 import { MdDashboard } from "react-icons/md"
-
+import Logo from "../../assets/nurul-huda-logo.svg"
 const NavBar = () => {
   return (
     <Box
@@ -30,11 +30,11 @@ const NavBar = () => {
           rounded="xl"
           _hover={{ bg: "whiteAlpha.200" }}
           whiteSpace="nowrap"
-          width="var(--sidebar-width)"
           px="4"
           py="4"
         >
-          <UserAccount />
+          {/* <UserAccount /> */}
+          <img src={Logo} style={{ width: "100px", margin: "auto" }} />
         </Box>
         <ScrollArea pt="5" pb="6">
           <Stack pb="6">
@@ -47,7 +47,7 @@ const NavBar = () => {
             <SidebarLink href="#" icon={<BiUserCircle />}>
               Maktab
             </SidebarLink>
-            <SidebarLink href="#" icon={<BiUserCircle />}>
+            <SidebarLink href="/enrolments/hifth" icon={<BiUserCircle />}>
               Hifth
             </SidebarLink>
             <SidebarLink href="/enrolments/tajweed" icon={<BiUserCircle />}>
