@@ -5,14 +5,20 @@ export const UserAccount = () => {
   return (
     <Menu>
       <UserAccountButton />
-      <MenuList shadow="lg" py="4" color={useColorModeValue("gray.600", "gray.200")} px="3">
+      <MenuList
+        shadow="lg"
+        py="4"
+        color={useColorModeValue("gray.600", "gray.200")}
+        px="3"
+        style={{ minWidth: "200px" }}
+      >
         <Text fontWeight="medium" mb="2">
           user@nha.org.au
         </Text>
         <MenuDivider />
         <MenuItem rounded="md">
           {" "}
-          <Text fontSize="xs">Settings</Text>
+          <Text fontSize="md">Settings</Text>
         </MenuItem>
         <MenuDivider />
         <MenuItem rounded="md">Logout</MenuItem>

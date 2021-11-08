@@ -4,7 +4,7 @@ import { useMobileMenuState } from "./navigation/mobile/useMobileMenuState"
 import { MobileMenuButton } from "./navigation/mobile/MobileMenuButton"
 import { Box, Flex, useColorModeValue as mode } from "@chakra-ui/react"
 import { TajweedEnrolmentQueue } from "./enrolment/tajweed/TajweedEnrolmentQueue"
-
+import { HifthEnrolmentQueue } from "./enrolment/hifth/HifthEnrolmentQueue"
 import { Route, Switch } from "react-router-dom"
 
 export const App = () => {
@@ -35,7 +35,7 @@ export const App = () => {
         >
           <Flex direction="column" height="full">
             <Flex w="full" py="4" justify="space-between" align="center" px="10">
-              <Flex align="center" minH="8">
+              <Flex w="full" justify="space-between" align="center" minH="8">
                 <MobileMenuButton onClick={toggle} isOpen={isOpen} />
               </Flex>
             </Flex>
@@ -46,6 +46,9 @@ export const App = () => {
                 </Route>
                 <Route exact path="/enrolments/tajweed">
                   <TajweedEnrolmentQueue />
+                </Route>
+                <Route exact path="/enrolments/hifth">
+                  <HifthEnrolmentQueue />
                 </Route>
                 <Route path="*">
                   <h1 className="text-center">Four oh Four</h1>
